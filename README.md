@@ -1,4 +1,4 @@
-## Bem Vindo ao Analisador Léxico e Sintático DARO
+## Bem Vindo ao Analisador Léxico e Sintático para C++
 DARO é um projeto desenvolvido como projeto acadêmico para componente curricular Teoria da Computação e Compiladores. Este projeto
 tem como foco descrever um analisador léxico e sintático para linguagem de programação _C++_, utilizando a ferramente auxiliar _JAVACC_.
 
