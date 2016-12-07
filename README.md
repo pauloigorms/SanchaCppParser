@@ -29,11 +29,8 @@ tem como foco descrever um analisador léxico e sintático para linguagem de pro
 		* Mostrar __mensagem de erro__, informando qual o erro encontrado e o __local do erro__, ou mostrar __mensagem positiva caso não tenham erros de sintaxe__. (_0.5 pts_);
 		
 		
-		
-		
-Item Extra – não ultrapassando ao valor total do trabalho) Deverão ser construídas regras semânticas para adicionar ao projeto implementado para:
-	* __Verificar se os tipos de dados dos operandos equivalem aos operadores__. (_0.75 pts_);
-	* __Variáveis usadas e não previamente declaradas__. (_0,75 pts_);
+				
+__Item Extra__ – não ultrapassando ao valor total do trabalho) Deverão ser construídas regras semânticas para adicionar ao projeto implementado para: a) __Verificar se os tipos de dados dos operandos equivalem aos operadores__. (_0.75 pts_); e b) __Variáveis usadas e não previamente declaradas__. (_0,75 pts_);
 
 
 			
