@@ -3,7 +3,7 @@ DARO é um projeto desenvolvido como projeto acadêmico para componente curricul
 tem como foco descrever um analisador léxico e sintático para linguagem de programação _C++_, utilizando a ferramente auxiliar _JAVACC_.
 
 
-#### Requisitos para Desenvolvimento AL&AS:
+### Requisitos para Desenvolvimento AL&AS:
 
 1. Ferramenta de implementação __JavaCC__ e ambiente de desenvolvimento Eclipse (NetBeans);
 2. Linguagem analisada: __C++__;
