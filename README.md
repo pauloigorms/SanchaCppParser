@@ -13,10 +13,10 @@ tem como foco descrever um analisador léxico e sintático para linguagem de pro
 	* Reconhecer símbolos usados:
 		* Identificadores de variáveis e sub-rotinas (funções, procedimentos, métodos). (_0.5 pt_);
 		* Palavras reservadas e símbolos usados nas:
-			o Atribuições e __expressões aritméticas e lógicas__ (_0.5 pt [0,25 por item]_);
-			o Estruturas __condição e repetição__; (_1.0 pt [0,5 por item]_);
-			o Valores numéricos __reais__ e __inteiros__ e __valores lógicos__; (_0.75 pt [0.25 por item]_);
-			o Sequência de ___caracteres___ permitidos na Linguagem de programação sorteada em sala (_0.25 pts_).
+			* Atribuições e __expressões aritméticas e lógicas__ (_0.5 pt [0,25 por item]_);
+			* Estruturas __condição e repetição__; (_1.0 pt [0,5 por item]_);
+			* Valores numéricos __reais__ e __inteiros__ e __valores lógicos__; (_0.75 pt [0.25 por item]_);
+			* Sequência de ___caracteres___ permitidos na Linguagem de programação sorteada em sala (_0.25 pts_).
 		* Ignorar espaços em __branco, tabulações, retrocessos e comentários__; (_0.25 pt_).
 	
 5. Deverá ser construída uma gramática livre do contexto (_formato BNF por escrito_) para o analisador sintático (_parte teórica: com sintaxe solicitada no item a seguir_). __Se a gramática não estiver no padrão solicitado de forma impressa, não será aceita__. (_2.0 pts_);
