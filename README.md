@@ -5,12 +5,12 @@ tem como foco descrever um analisador léxico e sintático para linguagem de pro
 
 #### Requisitos para Desenvolvimento AL&AS:
 
-	1. Ferramenta de implementação __JavaCC__ e ambiente de desenvolvimento Eclipse (NetBeans);
-	2. Linguagem analisada: __C++__;
-	3. Ler arquivo fonte de analise com extensão: __.txt__;
-	4. Analisador Léxico (_por expressões regulares_):
-		* Imprimir _tokens_ ou mensagem de __erro_, indicando local do erro caso o símbolo não pertença à linguagem;
-		* 		
+1. Ferramenta de implementação __JavaCC__ e ambiente de desenvolvimento Eclipse (NetBeans);
+2. Linguagem analisada: __C++__;
+3. Ler arquivo fonte de analise com extensão: __.txt__;
+4. Analisador Léxico (_por expressões regulares_):
+	* Imprimir _tokens_ ou mensagem de __erro_, indicando local do erro caso o símbolo não pertença à linguagem;
+	* 		
 
 #### Equipe
 
