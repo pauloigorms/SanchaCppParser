@@ -1,0 +1,37 @@
+/**
+ * Copyright @ DARO Analyzer
+ *
+ * Corporation: Minerva Project
+ * Date: 12/13/16
+ * Authors: Allex Lima      http://allexlima.com
+ *          Daniel Bispo
+ *          Paulo Moraes    http://pauloigormoraes.com
+ *          Renan Barroncas
+ *
+ * VERSION 1
+ */
+
+ options {
+
+   STATIC = true;
+
+ }
+
+ PARSER_BEGIN(lexicalAnalyzer)
+
+   public class lexicalAnalyzer {
+
+     public static void main (String[] args) {
+         System.out.println("Vamos iniciar o analisador léxico!");
+     }
+
+   }
+
+ PARSER_END(lexicalAnalyzer)
+
+ SKIP :
+ {
+
+   " "
+
+ }
