@@ -22,7 +22,7 @@
    public class lexicalAnalyzer {
 
      public static void main (String[] args) {
-         System.out.println("Vamos iniciar o analisador léxico!");
+         System.out.println("Vamos iniciar o analisador léxico agora realmente de verdade!");
      }
 
    }
