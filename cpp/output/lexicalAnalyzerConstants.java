@@ -9,89 +9,89 @@ public interface lexicalAnalyzerConstants {
   /** End of File. */
   int EOF = 0;
   /** RegularExpression Id. */
-  int LCURLYBRACE = 1;
+  int CARACTER = 1;
   /** RegularExpression Id. */
-  int RCURLYBRACE = 2;
+  int CONSTANTE = 2;
   /** RegularExpression Id. */
-  int LPARENTHESIS = 3;
+  int FAZER = 3;
   /** RegularExpression Id. */
-  int RPARENTHESIS = 4;
+  int DOBRO = 4;
   /** RegularExpression Id. */
-  int SEMICOLON = 5;
+  int SENAO = 5;
   /** RegularExpression Id. */
-  int ASSIGNEQUAL = 6;
+  int REAL = 6;
   /** RegularExpression Id. */
-  int TIMESEQUAL = 7;
+  int PARA = 7;
   /** RegularExpression Id. */
-  int DIVIDEEQUAL = 8;
+  int SE = 8;
   /** RegularExpression Id. */
-  int MODEQUAL = 9;
+  int INTEIRO = 9;
   /** RegularExpression Id. */
-  int PLUSEQUAL = 10;
+  int RETORNO = 10;
   /** RegularExpression Id. */
-  int MINUSEQUAL = 11;
+  int CASO = 11;
   /** RegularExpression Id. */
-  int OR = 12;
+  int ESCOLHA = 12;
   /** RegularExpression Id. */
-  int AND = 13;
+  int VAZIO = 13;
   /** RegularExpression Id. */
-  int EQUAL = 14;
+  int ENQUANTO = 14;
   /** RegularExpression Id. */
-  int NOTEQUAL = 15;
+  int VERDADEIRO = 15;
   /** RegularExpression Id. */
-  int LESSTHAN = 16;
+  int FALSO = 16;
   /** RegularExpression Id. */
-  int GREATERTHAN = 17;
+  int ECHAVE = 17;
   /** RegularExpression Id. */
-  int LESSTHANOREQUALTO = 18;
+  int DCHAVE = 18;
   /** RegularExpression Id. */
-  int GREATERTHANOREQUALTO = 19;
+  int EPARENTESE = 19;
   /** RegularExpression Id. */
-  int PLUS = 20;
+  int DPARENTESE = 20;
   /** RegularExpression Id. */
-  int MINUS = 21;
+  int PONTOVIRGULA = 21;
   /** RegularExpression Id. */
-  int STAR = 22;
+  int IGUAL = 22;
   /** RegularExpression Id. */
-  int DIVIDE = 23;
+  int MULTIPLICAIGUAL = 23;
   /** RegularExpression Id. */
-  int MOD = 24;
+  int DIVIDEIGUAL = 24;
   /** RegularExpression Id. */
-  int PLUSPLUS = 25;
+  int MODULOIGUAL = 25;
   /** RegularExpression Id. */
-  int MINUSMINUS = 26;
+  int SOMAIGUAL = 26;
   /** RegularExpression Id. */
-  int CHAR = 27;
+  int MENOSIGUAL = 27;
   /** RegularExpression Id. */
-  int CONST = 28;
+  int OULOGICO = 28;
   /** RegularExpression Id. */
-  int DO = 29;
+  int ELOGICO = 29;
   /** RegularExpression Id. */
-  int DOUBLE = 30;
+  int IGUALIGUAL = 30;
   /** RegularExpression Id. */
-  int ELSE = 31;
+  int DIFERENTE = 31;
   /** RegularExpression Id. */
-  int FLOAT = 32;
+  int MENOR = 32;
   /** RegularExpression Id. */
-  int FOR = 33;
+  int MAIOR = 33;
   /** RegularExpression Id. */
-  int IF = 34;
+  int MENORIGUAL = 34;
   /** RegularExpression Id. */
-  int INT = 35;
+  int MAIORIGUAL = 35;
   /** RegularExpression Id. */
-  int RETURN = 36;
+  int MAIS = 36;
   /** RegularExpression Id. */
-  int CASE = 37;
+  int MENOS = 37;
   /** RegularExpression Id. */
-  int SWITCH = 38;
+  int MULTIPLICACAO = 38;
   /** RegularExpression Id. */
-  int VOID = 39;
+  int DIVISAO = 39;
   /** RegularExpression Id. */
-  int WHILE = 40;
+  int MODULO = 40;
   /** RegularExpression Id. */
-  int TRUETOK = 41;
+  int INCREMENTA = 41;
   /** RegularExpression Id. */
-  int FALSETOK = 42;
+  int DECREMENTA = 42;
 
   /** Lexical state. */
   int DEFAULT = 0;
@@ -103,6 +103,22 @@ public interface lexicalAnalyzerConstants {
   /** Literal token values. */
   String[] tokenImage = {
     "<EOF>",
+    "\"char\"",
+    "\"const\"",
+    "\"do\"",
+    "\"double\"",
+    "\"else\"",
+    "\"float\"",
+    "\"for\"",
+    "\"if\"",
+    "\"int\"",
+    "\"return\"",
+    "\"case\"",
+    "\"switch\"",
+    "\"void\"",
+    "\"while\"",
+    "\"true\"",
+    "\"false\"",
     "\"{\"",
     "\"}\"",
     "\"(\"",
@@ -129,25 +145,8 @@ public interface lexicalAnalyzerConstants {
     "\"%\"",
     "\"++\"",
     "\"--\"",
-    "\"char\"",
-    "\"const\"",
-    "\"do\"",
-    "\"double\"",
-    "\"else\"",
-    "\"float\"",
-    "\"for\"",
-    "\"if\"",
-    "\"int\"",
-    "\"return\"",
-    "\"case\"",
-    "\"switch\"",
-    "\"void\"",
-    "\"while\"",
-    "\"true\"",
-    "\"false\"",
     "\" \"",
     "\"\\t\"",
-    "\"\\r\\n\"",
     "\"\\n\"",
     "\"//\"",
     "\"/*\"",

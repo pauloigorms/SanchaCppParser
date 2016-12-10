@@ -32,7 +32,7 @@ PARSER_END(lexicalAnalyzer)
 
 TOKEN :
 {
-| < CARACTER: "char" >
+  < CARACTER: "char" >
 | < CONSTANTE: "const" >
 | < FAZER: "do" >
 | < DOBRO: "double" >

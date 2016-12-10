@@ -2,7 +2,7 @@
 public class lexicalAnalyzer implements lexicalAnalyzerConstants {
 
   public static void main (String[] args) {
-    System.out.println("Vamos iniciar o analisador l\u00e9xico agora realmente de verdade!");
+    System.out.println("C\u00f3digo Java");
   }
 
   static private boolean jj_initialized_once = false;
@@ -164,7 +164,7 @@ public class lexicalAnalyzer implements lexicalAnalyzerConstants {
   /** Generate ParseException. */
   static public ParseException generateParseException() {
     jj_expentries.clear();
-    boolean[] la1tokens = new boolean[51];
+    boolean[] la1tokens = new boolean[50];
     if (jj_kind >= 0) {
       la1tokens[jj_kind] = true;
       jj_kind = -1;
@@ -181,7 +181,7 @@ public class lexicalAnalyzer implements lexicalAnalyzerConstants {
         }
       }
     }
-    for (int i = 0; i < 51; i++) {
+    for (int i = 0; i < 50; i++) {
       if (la1tokens[i]) {
         jj_expentry = new int[1];
         jj_expentry[0] = i;
