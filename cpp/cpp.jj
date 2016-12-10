@@ -1,0 +1,99 @@
+/**
+* Copyright @ DARO Analyzer
+*
+* Corporation: Minerva Project
+* Date: 12/13/16
+* Authors: Allex Lima      http://allexlima.com
+*          Daniel Bispo
+*          Paulo Moraes    http://pauloigormoraes.com
+*          Renan Barroncas
+*
+* VERSION 1
+*/
+
+options {
+
+  STATIC = true;
+  OUTPUT_DIRECTORY = "output/";
+
+}
+
+PARSER_BEGIN(lexicalAnalyzer)
+
+public class lexicalAnalyzer {
+
+  public static void main (String[] args) {
+    System.out.println("Código Java");
+  }
+
+}
+
+PARSER_END(lexicalAnalyzer)
+
+TOKEN :
+{
+| < CARACTER: "char" >
+| < CONSTANTE: "const" >
+| < FAZER: "do" >
+| < DOBRO: "double" >
+| < SENAO: "else" >
+| < REAL: "float" >
+| < PARA: "for" >
+| < SE: "if" >
+| < INTEIRO: "int" >
+| < RETORNO: "return" >
+| < CASO: "case" >
+| < ESCOLHA: "switch" >
+| < VAZIO: "void" >
+| < ENQUANTO: "while" >
+| < VERDADEIRO: "true" >
+| < FALSO: "false" >
+}
+
+TOKEN :
+{
+  < ECHAVE: "{" >
+| < DCHAVE: "}" >
+| < EPARENTESE: "(" >
+| < DPARENTESE: ")" >
+| < PONTOVIRGULA: ";" >
+| < IGUAL: "=" >
+| < MULTIPLICAIGUAL: "*=" >
+| < DIVIDEIGUAL: "/=" >
+| < MODULOIGUAL: "%=" >
+| < SOMAIGUAL: "+=" >
+| < MENOSIGUAL: "-=" >
+| < OULOGICO: "||" >
+| < ELOGICO: "&&" >
+| < IGUALIGUAL: "==" >
+| < DIFERENTE: "!=" >
+| < MENOR: "<" >
+| < MAIOR: ">" >
+| < MENORIGUAL: "<=" >
+| < MAIORIGUAL: ">=" >
+| < MAIS: "+" >
+| < MENOS: "-" >
+| < MULTIPLICACAO: "*" >
+| < DIVISAO: "/" >
+| < MODULO: "%" >
+| < INCREMENTA: "++" >
+| < DECREMENTA: "--" >
+}
+
+SKIP :
+{
+  " "
+| "\t"
+| "\n"
+| "//" : COMENTARIO_LINHA
+| "/*" : COMENTARIO_BLOCO
+}
+
+<COMENTARIO_LINHA> SKIP:
+{
+  "\n" : DEFAULT
+}
+<COMENTARIO_BLOCO> SKIP:
+{
+  "*/" : DEFAULT
+}
