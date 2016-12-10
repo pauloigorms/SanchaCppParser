@@ -14,6 +14,7 @@
 options {
 
   STATIC = true;
+  OUTPUT_DIRECTORY = "output/";
 
 }
 
