@@ -18,7 +18,7 @@ options {
 
 }
 
-PARSER_BEGIN(lexicalAnalyzer)
+PARSER_BEGIN(analisadorLexico)
 
 public class lexicalAnalyzer {
 
@@ -28,7 +28,7 @@ public class lexicalAnalyzer {
 
 }
 
-PARSER_END(lexicalAnalyzer)
+PARSER_END(analisadorLexico)
 
 TOKEN :
 {
