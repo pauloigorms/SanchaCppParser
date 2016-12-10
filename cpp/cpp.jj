@@ -23,7 +23,7 @@ PARSER_BEGIN(lexicalAnalyzer)
 public class lexicalAnalyzer {
 
   public static void main (String[] args) {
-    System.out.println("Vamos iniciar o analisador léxico agora realmente de verdade!");
+    System.out.println("Código Java");
   }
 
 }
@@ -32,64 +32,61 @@ PARSER_END(lexicalAnalyzer)
 
 TOKEN :
 {
-  < LCURLYBRACE: "{" >
-| < RCURLYBRACE: "}" >
-| < LPARENTHESIS: "(" >
-| < RPARENTHESIS: ")" >
-| < SEMICOLON: ";" >
-| < ASSIGNEQUAL: "=" >
-| < TIMESEQUAL: "*=" >
-| < DIVIDEEQUAL: "/=" >
-| < MODEQUAL: "%=" >
-| < PLUSEQUAL: "+=" >
-| < MINUSEQUAL: "-=" >
-| < OR: "||" >
-| < AND: "&&" >
-| < EQUAL: "==" >
-| < NOTEQUAL: "!=" >
-| < LESSTHAN: "<" >
-| < GREATERTHAN: ">" >
-| < LESSTHANOREQUALTO: "<=" >
-| < GREATERTHANOREQUALTO: ">=" >
-| < PLUS: "+" >
-| < MINUS: "-" >
-| < STAR: "*" >
-| < DIVIDE: "/" >
-| < MOD: "%" >
-| < PLUSPLUS: "++" >
-| < MINUSMINUS: "--" >
-| < CHAR: "char" >
-| < CONST: "const" >
-| < DO: "do" >
-| < DOUBLE: "double" >
-| < ELSE: "else" >
-| < FLOAT: "float" >
-| < FOR: "for" >
-| < IF: "if" >
-| < INT: "int" >
-| < RETURN: "return" >
-| < CASE: "case" >
-| < SWITCH: "switch" >
-| < VOID: "void" >
-| < WHILE: "while" >
-| < TRUETOK: "true" >
-| < FALSETOK: "false" >
+| < CARACTER: "char" >
+| < CONSTANTE: "const" >
+| < FAZER: "do" >
+| < DOBRO: "double" >
+| < SENAO: "else" >
+| < REAL: "float" >
+| < PARA: "for" >
+| < SE: "if" >
+| < INTEIRO: "int" >
+| < RETORNO: "return" >
+| < CASO: "case" >
+| < ESCOLHA: "switch" >
+| < VAZIO: "void" >
+| < ENQUANTO: "while" >
+| < VERDADEIRO: "true" >
+| < FALSO: "false" >
 }
 
+TOKEN :
+{
+  < ECHAVE: "{" >
+| < DCHAVE: "}" >
+| < EPARENTESE: "(" >
+| < DPARENTESE: ")" >
+| < PONTOVIRGULA: ";" >
+| < IGUAL: "=" >
+| < MULTIPLICAIGUAL: "*=" >
+| < DIVIDEIGUAL: "/=" >
+| < MODULOIGUAL: "%=" >
+| < SOMAIGUAL: "+=" >
+| < MENOSIGUAL: "-=" >
+| < OULOGICO: "||" >
+| < ELOGICO: "&&" >
+| < IGUALIGUAL: "==" >
+| < DIFERENTE: "!=" >
+| < MENOR: "<" >
+| < MAIOR: ">" >
+| < MENORIGUAL: "<=" >
+| < MAIORIGUAL: ">=" >
+| < MAIS: "+" >
+| < MENOS: "-" >
+| < MULTIPLICACAO: "*" >
+| < DIVISAO: "/" >
+| < MODULO: "%" >
+| < INCREMENTA: "++" >
+| < DECREMENTA: "--" >
+}
 
 SKIP :
 {
   " "
-  |
-  "\t"
-  |
-  "\r\n"
-  |
-  "\n"
-  |
-  "//" : COMENTARIO_LINHA
-  |
-  "/*" : COMENTARIO_BLOCO
+| "\t"
+| "\n"
+| "//" : COMENTARIO_LINHA
+| "/*" : COMENTARIO_BLOCO
 }
 
 <COMENTARIO_LINHA> SKIP:
