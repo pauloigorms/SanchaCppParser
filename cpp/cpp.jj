@@ -20,7 +20,7 @@ options {
 
 PARSER_BEGIN(analisadorLexico)
 
-public class lexicalAnalyzer {
+public class analisadorLexico {
 
   public static void main (String[] args) {
     System.out.println("Código Java");
@@ -100,7 +100,7 @@ SKIP :
   "*/" : DEFAULT
 }
 
-TOKEN : {
+/*TOKEN : {
   <  CARACTER : ("L") ? "'"
    (   (~["'","\\","\n","\r"])
    | ("\\" (
@@ -115,4 +115,4 @@ TOKEN : {
      )
    )
    "'" >
-}
+}*/
