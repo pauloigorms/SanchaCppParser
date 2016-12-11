@@ -47,19 +47,23 @@ TOKEN : {
                   | <IDENTIFICADOR> <INCREMENTA>
                   | <IDENTIFICADOR> <DECREMENTA>
     >
-    < #ARITMETICO : <EXPRESSAO> <MAIS> <EXPRESSAO>
+  | < #ARITMETICO : <EXPRESSAO> <MAIS> <EXPRESSAO>
                   | <EXPRESSAO> <MENOS> <EXPRESSAO>
                   | <EXPRESSAO> <MULTIPLICACAO> <EXPRESSAO>
                   | <EXPRESSAO> <DIVISAO> <EXPRESSAO>
                   | <EXPRESSAO>
     >
-    < #EXPRESSAO : <NUMERO>
+  | < #EXPRESSAO : <NUMERO>
                  | <EPARENTESE> <ARITMETICO> <DPARENTESE>
     >
-    < #NUMERO : <CINTEIRO>
+  | < #NUMERO : <CINTEIRO>
               | <CREAL>
     >
+}
 
+TOKEN : {
+      < #CINTEIRO : ["1"-"9"] (["0"-"9"])* >
+    | < #CREAL : (["0"-"9"])+ "." (["0"-"9"])* | (["0"-"9"])* "." (["0"-"9"])+ >
 }
 
 TOKEN :
@@ -81,7 +85,6 @@ TOKEN :
   | < VERDADEIRO: "true" >
   | < FALSO: "false" >
 }
-
 
 
 TOKEN :
