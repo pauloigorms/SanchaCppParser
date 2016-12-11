@@ -16,7 +16,7 @@
 hs_err_pid*
 
 # UserPaulo files
-/cpp/cpp_grammar.jj
-/cpp/JavaCC.jj
+cpp/extras/
+cpp/extras/*
 cpp/output/
 cpp/output/*

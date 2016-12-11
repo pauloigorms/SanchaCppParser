@@ -21,10 +21,15 @@ options {
 
 PARSER_BEGIN(analisadorLexico)
 
+import java.io.*;
+
 public class analisadorLexico {
 
-  public static void main (String[] args) {
-    System.out.println("Código Java");
+  public static void main (String[] args) throws ParseException, FileNotFoundException {
+    SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("teste.txt"), 0, 0);
+    Token token_temporario = null;
+    analisadorLexicoTokenManager token_msgn = new ScannerTokenManager(arquivo);
+    
   }
 
 }
@@ -40,10 +45,10 @@ TOKEN : {
 }
 
 TOKEN : {
-    < #CARACTER: "char" >
-  | < #REAL: "float" >
-  | < #INTEIRO: "int" >
-  | < #VAZIO: "void" >
+    < CARACTER: "char" >
+  | < REAL: "float" >
+  | < INTEIRO: "int" >
+  | < VAZIO: "void" >
   | < #EFAZER: "do" >
   | < #ESENAO: "else" >
   | < #EPARA: "for" >
@@ -102,9 +107,16 @@ SKIP : {
   "*/" : DEFAULT
 }
 
-
-int inicial() : {} {
-
-  
-
+//Iniciando analisador sintático
+/*
+void inicial() : {} {
+    atribuicao()<PONTOVIRGULA> {}
 }
+
+void atribuicao() : {} {
+  tipo() <IDENTIFICADOR>
+}
+
+void tipo() : {} {
+  < #CARACTER> | < #INTEIRO> | < #REAL> | < #VAZIO>
+} */
