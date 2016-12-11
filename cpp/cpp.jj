@@ -35,21 +35,19 @@ TOKEN : {
 }
 
 TOKEN : {
-    < #ATRIBUICAO : <TIPO> <IDENTIFICADOR> <IGUAL> <ARITMETICO>
+    < #ATRIBUICAO : <TIPO> <IDENTIFICADOR> <IGUAL> <EXPRESSAO>
                   | <TIPO> <IDENTIFICADOR>
-                  | <IDENTIFICADOR> <IGUAL> <ARITMETICO>
+                  | <IDENTIFICADOR> <IGUAL> <EXPRESSAO>
                   | <IDENTIFICADOR>
                   | <IDENTIFICADOR> <INCREMENTA>
                   | <IDENTIFICADOR> <DECREMENTA>
     >
-  | < #ARITMETICO : <EXPRESSAO> <MAIS> <EXPRESSAO>
-                  | <EXPRESSAO> <MENOS> <EXPRESSAO>
-                  | <EXPRESSAO> <MULTIPLICACAO> <EXPRESSAO>
-                  | <EXPRESSAO> <DIVISAO> <EXPRESSAO>
-                  | <EXPRESSAO>
-    >
-  | < #EXPRESSAO : <NUMERO>
-                 | <EPARENTESE> <ARITMETICO> <DPARENTESE>
+  | < #EXPRESSAO : <NUMERO> <MAIS> <EXPRESSAO>
+                  | <NUMERO> <MENOS> <EXPRESSAO>
+                  | <NUMERO> <MULTIPLICACAO> <EXPRESSAO>
+                  | <NUMERO> <DIVISAO> <EXPRESSAO>
+                  | <EPARENTESE> <EXPRESSAO> <DPARENTESE>
+	                | <NUMERO>
     >
 }
 
@@ -109,7 +107,7 @@ TOKEN : {
     | < #BLOCO : <ATRIBUICAO> <PONTOVIRGULA>
                | <ERETORNO> <RETURNO> <PONTOVIRGULA>
                | <QUEBRAR> <PONTOVIRGULA> >
-    | < #RETURNO: <IDENTIFICADOR> | <ARITMETICO> >
+    | < #RETURNO: <IDENTIFICADOR> | <EXPRESSAO> >
 }
 
 TOKEN : {
