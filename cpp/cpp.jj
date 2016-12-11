@@ -32,87 +32,105 @@ PARSER_END(analisadorLexico)
 
 TOKEN :
 {
-  < CARACTER: "char" >
-| < CONSTANTE: "const" >
-| < FAZER: "do" >
-| < DOBRO: "double" >
-| < SENAO: "else" >
-| < REAL: "float" >
-| < PARA: "for" >
-| < SE: "if" >
-| < INTEIRO: "int" >
-| < RETORNO: "return" >
-| < CASO: "case" >
-| < ESCOLHA: "switch" >
-| < VAZIO: "void" >
-| < ENQUANTO: "while" >
-| < VERDADEIRO: "true" >
-| < FALSO: "false" >
+    < INICIO: <ATRIBUICAO>";" | <REPETICAO> | <SE> | <FUNCAO> >
+  | < IDENTIFICADOR: (["n","t","b","r","f","\\","'","\""]
+                     | ["0"-"7"] ( ["0"-"7"] )?
+                     | ["0"-"3"] ["0"-"7"] ["0"-"7"] )* >
+  | < #TIPO : <INTEIRO> | <REAL> | <CARACTER> | <VOID> >
+}
+
+TOKEN : {
+    < #ATRIBUICAO : <TIPO> <IDENTIFICADOR> <IGUAL> <ARITMETICO>
+                  | <TIPO> <IDENTIFICADOR>
+                  | <IDENTIFICADOR> <IGUAL> <ARITMETICO>
+                  | <IDENTIFICADOR>
+                  | <IDENTIFICADOR> <INCREMENTA>
+                  | <IDENTIFICADOR> <DECREMENTA>
+    >
+    < #ARITMETICO : <EXPRESSAO> <MAIS> <EXPRESSAO>
+                  | <EXPRESSAO> <MENOS> <EXPRESSAO>
+                  | <EXPRESSAO> <MULTIPLICACAO> <EXPRESSAO>
+                  | <EXPRESSAO> <DIVISAO> <EXPRESSAO>
+                  | <EXPRESSAO>
+    >
+    < #EXPRESSAO : <NUMERO>
+                 | <EPARENTESE> <ARITMETICO> <DPARENTESE>
+    >
+    < #NUMERO : <CINTEIRO>
+              | <CREAL>
+    >
+
 }
 
 TOKEN :
 {
-  < ECHAVE: "{" >
-| < DCHAVE: "}" >
-| < EPARENTESE: "(" >
-| < DPARENTESE: ")" >
-| < PONTOVIRGULA: ";" >
-| < IGUAL: "=" >
-| < MULTIPLICAIGUAL: "*=" >
-| < DIVIDEIGUAL: "/=" >
-| < MODULOIGUAL: "%=" >
-| < SOMAIGUAL: "+=" >
-| < MENOSIGUAL: "-=" >
-| < OULOGICO: "||" >
-| < ELOGICO: "&&" >
-| < IGUALIGUAL: "==" >
-| < DIFERENTE: "!=" >
-| < MENOR: "<" >
-| < MAIOR: ">" >
-| < MENORIGUAL: "<=" >
-| < MAIORIGUAL: ">=" >
-| < MENORMENOR: "<<" >
-| < MAIORMAIOR: ">>" >
-| < MAIS: "+" >
-| < MENOS: "-" >
-| < MULTIPLICACAO: "*" >
-| < DIVISAO: "/" >
-| < MODULO: "%" >
-| < INCREMENTA: "++" >
-| < DECREMENTA: "--" >
+    < #CARACTER: "char" >
+  | < #REAL: "float" >
+  | < #INTEIRO: "int" >
+  | < #VAZIO: "void" >
+  | < CONSTANTE: "const" >
+  | < FAZER: "do" >
+  | < DOBRO: "double" >
+  | < SENAO: "else" >
+  | < PARA: "for" >
+  | < SE: "if" >
+  | < RETORNO: "return" >
+  | < CASO: "case" >
+  | < ESCOLHA: "switch" >
+  | < ENQUANTO: "while" >
+  | < VERDADEIRO: "true" >
+  | < FALSO: "false" >
+}
+
+
+
+TOKEN :
+{
+    < ECHAVE: "{" >
+  | < DCHAVE: "}" >
+  | < EPARENTESE: "(" >
+  | < DPARENTESE: ")" >
+  | < PONTOVIRGULA: ";" >
+  | < #IGUAL: "=" >
+  | < MULTIPLICAIGUAL: "*=" >
+  | < DIVIDEIGUAL: "/=" >
+  | < MODULOIGUAL: "%=" >
+  | < SOMAIGUAL: "+=" >
+  | < MENOSIGUAL: "-=" >
+  | < OULOGICO: "||" >
+  | < ELOGICO: "&&" >
+  | < IGUALIGUAL: "==" >
+  | < DIFERENTE: "!=" >
+  | < MENOR: "<" >
+  | < MAIOR: ">" >
+  | < MENORIGUAL: "<=" >
+  | < MAIORIGUAL: ">=" >
+  | < MENORMENOR: "<<" >
+  | < MAIORMAIOR: ">>" >
+  | < MAIS: "+" >
+  | < MENOS: "-" >
+  | < MULTIPLICACAO: "*" >
+  | < DIVISAO: "/" >
+  | < MODULO: "%" >
+  | < #INCREMENTA: "++" >
+  | < #DECREMENTA: "--" >
 }
 
 SKIP :
 {
   " "
-| "\t"
-| "\n"
-| "//" : COMENTARIO_LINHA
-| "/*" : COMENTARIO_BLOCO
+  | "\t"
+  | "\n"
+  | "//" : COMENTARIO_LINHA
+  | "/*" : COMENTARIO_BLOCO
 }
 
 <COMENTARIO_LINHA> SKIP:
 {
-  "\n" : DEFAULT
+  "//" : DEFAULT
 }
+
 <COMENTARIO_BLOCO> SKIP:
 {
   "*/" : DEFAULT
 }
-
-/*TOKEN : {
-  <  CARACTER : ("L") ? "'"
-   (   (~["'","\\","\n","\r"])
-   | ("\\" (
-             ["n","t","v","b","r","f","a","\\","?","'","\""]
-            |
-             "0" (["0"-"7"])*
-            |
-             ["1"-"9"] (["0"-"9"])*
-            |
-             ("0x" | "0X") (["0"-"9","a"-"f","A"-"F"])+
-           )
-     )
-   )
-   "'" >
-}*/
