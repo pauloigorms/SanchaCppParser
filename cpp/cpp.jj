@@ -14,9 +14,8 @@
 options {
 
   STATIC = true;
-  DEBUG_LOOKAHEAD = true;
   OUTPUT_DIRECTORY = "output/";
-
+  DEBUG_LOOKAHEAD = true;
 }
 
 PARSER_BEGIN(AnalisadorLexico)
@@ -31,83 +30,65 @@ public class AnalisadorLexico {
     AnalisadorLexicoTokenManager TkMgr = new AnalisadorLexicoTokenManager(arquivo);
 
     do {
+
         token_temporario = TkMgr.getNextToken();
 
-        if (token_temporario.kind == NUMERO) {
+        if (token_temporario.kind == DIGITO)
           System.out.println("Numérico > " + token_temporario);
-        }
 
-        if (token_temporario.kind == IDENTIFICADOR) {
+        else if (token_temporario.kind == IDENTIFICADOR)
           System.out.println("Identificador > " + token_temporario);
-        }
 
-        if (token_temporario.kind == CARACTER) {
+        else if (token_temporario.kind == CARACTER)
           System.out.println("Char > " + token_temporario);
-        }
 
-        if (token_temporario.kind == REAL) {
+        else if (token_temporario.kind == NUMEROREAL)
           System.out.println("Real > " + token_temporario);
-        }
 
-        if (token_temporario.kind == INTEIRO) {
+        else if (token_temporario.kind == NUMEROINTEIRO)
           System.out.println("Inteiro > " + token_temporario);
-        }
 
-        if (token_temporario.kind == VAZIO) {
+        else if (token_temporario.kind == VAZIO)
           System.out.println("Void > " + token_temporario);
-        }
 
-        if (token_temporario.kind == EFAZER || token_temporario.kind == EENQUANTO || token_temporario.kind == EPARA || token_temporario.kind == CASO || token_temporario.kind == QUEBRAR || token_temporario.kind == EESCOLHA) {
+        else if (token_temporario.kind == EFAZER || token_temporario.kind == EENQUANTO || token_temporario.kind == EPARA || token_temporario.kind == CASO || token_temporario.kind == QUEBRAR || token_temporario.kind == EESCOLHA)
           System.out.println("Laço de repetição > " + token_temporario);
-        }
 
-        if (token_temporario.kind == ESE || token_temporario.kind == ESENAO) {
+        else if (token_temporario.kind == ESE || token_temporario.kind == ESENAO)
           System.out.println("Laço de condição > " + token_temporario);
-        }
 
-        if (token_temporario.kind == VERDADEIRO || token_temporario.kind == FALSO) {
+        else if (token_temporario.kind == VERDADEIRO || token_temporario.kind == FALSO)
           System.out.println("Verificação lógico > " + token_temporario);
-        }
 
-        if (token_temporario.kind == ERETORNO || token_temporario.kind == PADRAO) {
+        else if (token_temporario.kind == ERETORNO || token_temporario.kind == PADRAO)
           System.out.println("Laços de definição > " + token_temporario);
-        }
 
-        if (token_temporario.kind == ECHAVE || token_temporario.kind == DCHAVE) {
+        else if (token_temporario.kind == ECHAVE || token_temporario.kind == DCHAVE)
           System.out.println("Chave > " + token_temporario);
-        }
 
-        if (token_temporario.kind == EPARENTESE || token_temporario.kind == DPARENTESE) {
+        else if (token_temporario.kind == EPARENTESE || token_temporario.kind == DPARENTESE)
           System.out.println("Parêntese > " + token_temporario);
-        }
 
-        if (token_temporario.kind == PONTOVIRGULA || token_temporario.kind == DOISPONTOS || token_temporario.kind == VIRGULA) {
+        else if (token_temporario.kind == PONTOVIRGULA || token_temporario.kind == DOISPONTOS || token_temporario.kind == VIRGULA)
           System.out.println("Pontuação > " + token_temporario);
-        }
 
-        if (token_temporario.kind == IGUAL) {
+        else if (token_temporario.kind == IGUAL)
           System.out.println("Atribuição > " + token_temporario);
-        }
 
-        if (token_temporario.kind == OULOGICO || token_temporario.kind == ELOGICO || token_temporario.kind == IGUALIGUAL || token_temporario.kind == DIFERENTE) {
+        else if (token_temporario.kind == OULOGICO || token_temporario.kind == ELOGICO || token_temporario.kind == IGUALIGUAL || token_temporario.kind == DIFERENTE)
           System.out.println("Comparação lógico > " + token_temporario);
-        }
 
-        if (token_temporario.kind == MENOR || token_temporario.kind == MAIOR || token_temporario.kind == MENORIGUAL || token_temporario.kind == MAIORIGUAL) {
+        else if (token_temporario.kind == MENOR || token_temporario.kind == MAIOR || token_temporario.kind == MENORIGUAL || token_temporario.kind == MAIORIGUAL)
           System.out.println("Comparação matemática > " + token_temporario);
-        }
 
-        if (token_temporario.kind == MAIS || token_temporario.kind == MENOS || token_temporario.kind == MULTIPLICACAO || token_temporario.kind == DIVISAO) {
+        else if (token_temporario.kind == MAIS || token_temporario.kind == MENOS || token_temporario.kind == MULTIPLICACAO || token_temporario.kind == DIVISAO)
           System.out.println("Aritmético > " + token_temporario);
-        }
 
-        if (token_temporario.kind == INCREMENTA || token_temporario.kind == DECREMENTA) {
+        else if (token_temporario.kind == INCREMENTA || token_temporario.kind == DECREMENTA)
           System.out.println("Incrementação > " + token_temporario);
-        }
 
-        if (token_temporario.kind != EOF) {
-          System.out.println("ERRO > TOKEN (" + token_temporario ") não definido pela gramática.");
-        }
+        else if (token_temporario.kind == LEXEMAS_INVALIDOS)
+          System.out.println(" Erro léxico > " + token_temporario.image);
 
     } while (token_temporario.kind != EOF);
 
@@ -117,9 +98,12 @@ public class AnalisadorLexico {
 
 PARSER_END(AnalisadorLexico)
 
+
 TOKEN : {
-      < NUMERO : (["1"-"9"])* (["0"-"9"])+ | (["0"-"9"])+ "." (["0"-"9"])* | (["0"-"9"])* "." (["0"-"9"])+ >
-    | < IDENTIFICADOR: ["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
+      < #DIGITO : ["0"-"9"] >
+    | < NUMEROINTEIRO : (<DIGITO>)+ >
+    | < NUMEROREAL : (<DIGITO>)+ "," (<DIGITO>)+ >
+    | < IDENTIFICADOR: (["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
 }
 
 //["n","t","r","\\","'","\""]
@@ -179,10 +163,22 @@ SKIP : {
 
 <COMENTARIO_LINHA> SKIP: {
   "//" : DEFAULT
+  | <~[]>
 }
 
 <COMENTARIO_BLOCO> SKIP: {
   "*/" : DEFAULT
+  | <~[]>
+}
+
+/* Tratando erros léxicos */
+SPECIAL_TOKEN :
+{
+    <LEXEMAS_INVALIDOS: (~ ["a"-"z", "A"-"Z", "0"-"9", "\"", "(", ")", "[", "]", "{", "}", ";",",",
+                          ".", "=", ">", "<", "+", "-", "*", "/","%", " ", "\t", "\n", "\r", "\f"])+ >
+    {
+      System.err.println("Erro léxico::: [linha #" + input_stream.getEndLine() + "] --- [token #"+image+"] não reconhecido.");
+    }
 }
 
 //Iniciando analisador sintático

@@ -1,1 +1,10 @@
-7ug
+void classe {
+  int i = 4;
+  int j = 4;
+  int p = i + j;
+  return p;
+}
+?
+!
+&&
+||
