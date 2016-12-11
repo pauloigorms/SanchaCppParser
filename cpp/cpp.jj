@@ -101,3 +101,10 @@ SKIP : {
 <COMENTARIO_BLOCO> SKIP: {
   "*/" : DEFAULT
 }
+
+
+int inicial() : {} {
+
+  
+
+}
