@@ -8,5 +8,5 @@
 javacc cpp.jj
 chmod 777 output/
 cd output/
-javac analisadorLexico.java
-java analisadorLexico
+javac AnalisadorLexico.java
+java AnalisadorLexico

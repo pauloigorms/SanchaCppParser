@@ -19,40 +19,121 @@ options {
 
 }
 
-PARSER_BEGIN(analisadorLexico)
+PARSER_BEGIN(AnalisadorLexico)
 
 import java.io.*;
 
-public class analisadorLexico {
+public class AnalisadorLexico {
 
   public static void main (String[] args) throws ParseException, FileNotFoundException {
-    SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("teste.txt"), 0, 0);
+    SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/DAROAnalyzer/cpp/teste.txt"),0,0);
     Token token_temporario = null;
-    analisadorLexicoTokenManager token_msgn = new ScannerTokenManager(arquivo);
-    
+    AnalisadorLexicoTokenManager TkMgr = new AnalisadorLexicoTokenManager(arquivo);
+
+    do {
+        token_temporario = TkMgr.getNextToken();
+
+        if (token_temporario.kind == NUMERO) {
+          System.out.println("Numérico > " + token_temporario);
+        }
+
+        if (token_temporario.kind == IDENTIFICADOR) {
+          System.out.println("Identificador > " + token_temporario);
+        }
+
+        if (token_temporario.kind == CARACTER) {
+          System.out.println("Char > " + token_temporario);
+        }
+
+        if (token_temporario.kind == REAL) {
+          System.out.println("Real > " + token_temporario);
+        }
+
+        if (token_temporario.kind == INTEIRO) {
+          System.out.println("Inteiro > " + token_temporario);
+        }
+
+        if (token_temporario.kind == VAZIO) {
+          System.out.println("Void > " + token_temporario);
+        }
+
+        if (token_temporario.kind == EFAZER || token_temporario.kind == EENQUANTO || token_temporario.kind == EPARA || token_temporario.kind == CASO || token_temporario.kind == QUEBRAR || token_temporario.kind == EESCOLHA) {
+          System.out.println("Laço de repetição > " + token_temporario);
+        }
+
+        if (token_temporario.kind == ESE || token_temporario.kind == ESENAO) {
+          System.out.println("Laço de condição > " + token_temporario);
+        }
+
+        if (token_temporario.kind == VERDADEIRO || token_temporario.kind == FALSO) {
+          System.out.println("Verificação lógico > " + token_temporario);
+        }
+
+        if (token_temporario.kind == ERETORNO || token_temporario.kind == PADRAO) {
+          System.out.println("Laços de definição > " + token_temporario);
+        }
+
+        if (token_temporario.kind == ECHAVE || token_temporario.kind == DCHAVE) {
+          System.out.println("Chave > " + token_temporario);
+        }
+
+        if (token_temporario.kind == EPARENTESE || token_temporario.kind == DPARENTESE) {
+          System.out.println("Parêntese > " + token_temporario);
+        }
+
+        if (token_temporario.kind == PONTOVIRGULA || token_temporario.kind == DOISPONTOS || token_temporario.kind == VIRGULA) {
+          System.out.println("Pontuação > " + token_temporario);
+        }
+
+        if (token_temporario.kind == IGUAL) {
+          System.out.println("Atribuição > " + token_temporario);
+        }
+
+        if (token_temporario.kind == OULOGICO || token_temporario.kind == ELOGICO || token_temporario.kind == IGUALIGUAL || token_temporario.kind == DIFERENTE) {
+          System.out.println("Comparação lógico > " + token_temporario);
+        }
+
+        if (token_temporario.kind == MENOR || token_temporario.kind == MAIOR || token_temporario.kind == MENORIGUAL || token_temporario.kind == MAIORIGUAL) {
+          System.out.println("Comparação matemática > " + token_temporario);
+        }
+
+        if (token_temporario.kind == MAIS || token_temporario.kind == MENOS || token_temporario.kind == MULTIPLICACAO || token_temporario.kind == DIVISAO) {
+          System.out.println("Aritmético > " + token_temporario);
+        }
+
+        if (token_temporario.kind == INCREMENTA || token_temporario.kind == DECREMENTA) {
+          System.out.println("Incrementação > " + token_temporario);
+        }
+
+        if (token_temporario.kind != EOF) {
+          System.out.println("ERRO > TOKEN (" + token_temporario ") não definido pela gramática.");
+        }
+
+    } while (token_temporario.kind != EOF);
+
   }
 
 }
 
-PARSER_END(analisadorLexico)
+PARSER_END(AnalisadorLexico)
 
 TOKEN : {
       < NUMERO : (["1"-"9"])* (["0"-"9"])+
                | (["0"-"9"])+ "." (["0"-"9"])* | (["0"-"9"])* "." (["0"-"9"])+
       >
-    | < IDENTIFICADOR:   ["n","t","r","\\","'","\""]
-                       | (["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
+    | < IDENTIFICADOR:     ["n","t","r","\\","'","\""]
+                        | (["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
 }
 
 TOKEN : {
-    < CARACTER: "char" >
-  | < REAL: "float" >
-  | < INTEIRO: "int" >
-  | < VAZIO: "void" >
+    < #CARACTER: "char" >
+  | < #REAL: "float" >
+  | < #INTEIRO: "int" >
+  | < #VAZIO: "void" >
   | < #EFAZER: "do" >
-  | < #ESENAO: "else" >
   | < #EPARA: "for" >
   | < #ESE: "if" >
+  | < #ESENAO: "else" >
   | < #ERETORNO: "return" >
   | < #PADRAO: "default">
   | < #QUEBRAR: "break">
@@ -72,8 +153,6 @@ TOKEN : {
   | < DOISPONTOS: ":">
   | < VIRGULA: ",">
   | < IGUAL: "=" >
-  | < MULTIPLICAIGUAL: "*=" >
-  | < DIVIDEIGUAL: "/=" >
   | < OULOGICO: "||" >
   | < ELOGICO: "&&" >
   | < IGUALIGUAL: "==" >
