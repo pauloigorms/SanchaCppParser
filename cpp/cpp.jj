@@ -30,13 +30,8 @@ public class analisadorLexico {
 
 PARSER_END(analisadorLexico)
 
-TOKEN :
-{
-    < INICIO: <ATRIBUICAO>";" | <REPETICAO> | <SE> | <FUNCAO> >
-  | < IDENTIFICADOR: (["n","t","b","r","f","\\","'","\""]
-                     | ["0"-"7"] ( ["0"-"7"] )?
-                     | ["0"-"3"] ["0"-"7"] ["0"-"7"] )* >
-  | < #TIPO : <INTEIRO> | <REAL> | <CARACTER> | <VOID> >
+TOKEN : {
+    < INICIO: <ATRIBUICAO> <PONTOVIRGULA> | <REPETICAO> | <FUNCAO> | <SE> >
 }
 
 TOKEN : {
@@ -56,71 +51,114 @@ TOKEN : {
   | < #EXPRESSAO : <NUMERO>
                  | <EPARENTESE> <ARITMETICO> <DPARENTESE>
     >
-  | < #NUMERO : <CINTEIRO>
-              | <CREAL>
-    >
+}
+
+TOKEN : {
+  < #REPETICAO : <PARA>
+             | <FACAENQUANTO>
+             | <ENQUANTO>
+             | <ESCOLHA>
+  >
+  | < #PARA : <EPARA> <EPARENTESE> <ATRIBUICAO> <PONTOVIRGULA> <CONDICAO> <PONTOVIRGULA> <ATRIBUICAO> <DPARENTESE> <ECHAVE> <BLOCO> <DCHAVE> >
+  | < #FACAENQUANTO : <EFAZER> <ECHAVE> <BLOCO> <DCHAVE> <EENQUANTO> <EPARENTESE> <CONDICAO> <DPARENTESE> >
+  | < #ENQUANTO : <EENQUANTO> <EPARENTESE> <CONDICAO> <DPARENTESE> <ECHAVE> <BLOCO> <DCHAVE> >
+  | < #ESCOLHA : <EESCOLHA> <EPARENTESE> <CONDICAO> <DPARENTESE> <ECHAVE> <ESCAUX> <DCHAVE> >
+
+}
+
+TOKEN : {
+  < #FUNCAO : <TIPO> <IDENTIFICADOR> <EPARENTESE> <DPARENTESE> <ECHAVE> <BLOCO> <DCHAVE>
+          | <TIPO> <IDENTIFICADOR> <EPARENTESE> <ATRIBUICAO> (<VIRGULA> <ATRIBUICAO>)+ <DPARENTESE> <ECHAVE> <BLOCO> <DCHAVE>
+  >
+}
+
+TOKEN : {
+  < #SE : <ESE> <EPARENTESE> <CONDICAO> <DPARENTESE> <ECHAVE> <BLOCO> <DCHAVE>
+      | <ESE> <EPARENTESE> <CONDICAO> <DPARENTESE> <ECHAVE> <BLOCO> <DCHAVE> <ESENAO> <ECHAVE> <BLOCO> <DCHAVE>
+      | <ESE> <EPARENTESE> <CONDICAO> <DPARENTESE> <ECHAVE> <BLOCO> <DCHAVE> <ESENAO> <SE>
+  >
+}
+
+TOKEN : {
+  < #CONDICAO : <ATCOND> <MAIOR> <ATCOND>
+              | <ATCOND> <MENOR> <ATCOND>
+              | <ATCOND> <IGUALIGUAL> <ATCOND>
+              | <ATCOND> <MAIORIGUAL> <ATCOND>
+              | <ATCOND> <MENORIGUAL> <ATCOND>
+              | <ATCOND> <DIFERENTE> <ATCOND>
+              | <ATCOND>
+              | (<EPARENTESE> <CONDICAO> <DPARENTESE> (<LOGICO> <CONDICAO>)+)
+  >
 }
 
 TOKEN : {
       < #CINTEIRO : ["1"-"9"] (["0"-"9"])* >
     | < #CREAL : (["0"-"9"])+ "." (["0"-"9"])* | (["0"-"9"])* "." (["0"-"9"])+ >
+    | < #ESCAUX : (<CASO> <CINTEIRO> <DOISPONTOS> <BLOCO>)+
+                | <PADRAO> <DOISPONTOS> <BLOCO> >
+    | < IDENTIFICADOR: (["n","t","b","r","f","\\","'","\""]
+                       | ["0"-"7"] ( ["0"-"7"] )?
+                       | ["0"-"3"] ["0"-"7"] ["0"-"7"] )* >
+    | < #TIPO : <INTEIRO> | <REAL> | <CARACTER> | <VAZIO> >
+    | < #LOGICO : <ELOGICO> | <OULOGICO> >
+    | < #ATCOND : <IDENTIFICADOR>
+                | <NUMERO>
+                | <VERDADEIRO>
+                | <FALSO> >
+    | < #NUMERO : <CINTEIRO> | <CREAL> >
+    | < #BLOCO : <ATRIBUICAO> <PONTOVIRGULA>
+               | <ERETORNO> <RETURNO> <PONTOVIRGULA>
+               | <QUEBRAR> <PONTOVIRGULA> >
+    | < #RETURNO: <IDENTIFICADOR> | <ARITMETICO> >
 }
 
-TOKEN :
-{
+TOKEN : {
     < #CARACTER: "char" >
   | < #REAL: "float" >
   | < #INTEIRO: "int" >
   | < #VAZIO: "void" >
-  | < CONSTANTE: "const" >
-  | < FAZER: "do" >
-  | < DOBRO: "double" >
-  | < SENAO: "else" >
-  | < PARA: "for" >
-  | < SE: "if" >
-  | < RETORNO: "return" >
-  | < CASO: "case" >
-  | < ESCOLHA: "switch" >
-  | < ENQUANTO: "while" >
-  | < VERDADEIRO: "true" >
-  | < FALSO: "false" >
+  | < #EFAZER: "do" >
+  | < #ESENAO: "else" >
+  | < #EPARA: "for" >
+  | < #ESE: "if" >
+  | < #ERETORNO: "return" >
+  | < #PADRAO: "default">
+  | < #QUEBRAR: "break">
+  | < #CASO: "case" >
+  | < #EESCOLHA: "switch" >
+  | < #EENQUANTO: "while" >
+  | < #VERDADEIRO: "true" >
+  | < #FALSO: "false" >
 }
 
-
-TOKEN :
-{
-    < ECHAVE: "{" >
-  | < DCHAVE: "}" >
-  | < EPARENTESE: "(" >
-  | < DPARENTESE: ")" >
-  | < PONTOVIRGULA: ";" >
+TOKEN : {
+    < #ECHAVE: "{" >
+  | < #DCHAVE: "}" >
+  | < #EPARENTESE: "(" >
+  | < #DPARENTESE: ")" >
+  | < #PONTOVIRGULA: ";" >
+  | < #DOISPONTOS: ":">
+  | < #VIRGULA: ",">
   | < #IGUAL: "=" >
-  | < MULTIPLICAIGUAL: "*=" >
-  | < DIVIDEIGUAL: "/=" >
-  | < MODULOIGUAL: "%=" >
-  | < SOMAIGUAL: "+=" >
-  | < MENOSIGUAL: "-=" >
-  | < OULOGICO: "||" >
-  | < ELOGICO: "&&" >
-  | < IGUALIGUAL: "==" >
-  | < DIFERENTE: "!=" >
-  | < MENOR: "<" >
-  | < MAIOR: ">" >
-  | < MENORIGUAL: "<=" >
-  | < MAIORIGUAL: ">=" >
-  | < MENORMENOR: "<<" >
-  | < MAIORMAIOR: ">>" >
-  | < MAIS: "+" >
-  | < MENOS: "-" >
-  | < MULTIPLICACAO: "*" >
-  | < DIVISAO: "/" >
-  | < MODULO: "%" >
+  | < #MULTIPLICAIGUAL: "*=" >
+  | < #DIVIDEIGUAL: "/=" >
+  | < #OULOGICO: "||" >
+  | < #ELOGICO: "&&" >
+  | < #IGUALIGUAL: "==" >
+  | < #DIFERENTE: "!=" >
+  | < #MENOR: "<" >
+  | < #MAIOR: ">" >
+  | < #MENORIGUAL: "<=" >
+  | < #MAIORIGUAL: ">=" >
+  | < #MAIS: "+" >
+  | < #MENOS: "-" >
+  | < #MULTIPLICACAO: "*" >
+  | < #DIVISAO: "/" >
   | < #INCREMENTA: "++" >
   | < #DECREMENTA: "--" >
 }
 
-SKIP :
-{
+SKIP : {
   " "
   | "\t"
   | "\n"
@@ -128,12 +166,10 @@ SKIP :
   | "/*" : COMENTARIO_BLOCO
 }
 
-<COMENTARIO_LINHA> SKIP:
-{
+<COMENTARIO_LINHA> SKIP: {
   "//" : DEFAULT
 }
 
-<COMENTARIO_BLOCO> SKIP:
-{
+<COMENTARIO_BLOCO> SKIP: {
   "*/" : DEFAULT
 }
