@@ -13,7 +13,7 @@
 
 options {
 
-  STATIC = true;
+  STATIC = false;
   OUTPUT_DIRECTORY = "output/";
   DEBUG_LOOKAHEAD = true;
 }
@@ -24,12 +24,51 @@ import java.io.*;
 
 public class AnalisadorLexico {
 
-  public static void main (String[] args) throws ParseException, FileNotFoundException {
-    SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"),0,0);
-    Token token_temporario = null;
-    AnalisadorLexicoTokenManager TkMgr = new AnalisadorLexicoTokenManager(arquivo);
+  public static void main (String args []) throws ParseException {
+      AnalisadorLexico expressao = new AnalisadorLexico(System.in);
+      //Entrada:::terminal
+      while (true) {
+          try {
+            switch (expressao.inicial()) {
+                  case 0 :
+                  System.out.println("Sintaxe correta!");
+                  break;
+                  case 1 :
+                  System.out.println("ERRO");
+                  break;
+                  default :
+                  break;
+            }
+          } catch (Exception erroExecao) {
+                System.out.println("Erro de Exeção");
+                System.out.println(erroExecao.getMessage()); }
+            catch (Error erroQualquer) {
+                System.out.println("Oops.");
+                System.out.println(erroQualquer.getMessage());
+                break; }
+      }
+      //Entrada:::arquivo
+      /*try {  // cria AS
+          SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"),0,0);
+          AnalisadorLexico expressao = new AnalisadorLexico(arquivo);
+      } catch (java.io.FileNotFoundException msgnErro) {
+             System.out.println("Arquivo não encontrado");
+      return;
+    }
+         try { expressao.inicial(); }  // chama o método que faz a análise
+         catch (ParseException msgnErro) { System.err.println(msgnErro.getMessage()); }*/
 
-    do {
+  /*switch (AnalisadorLexico.inicial()) {
+    case 0 :
+    System.out.println("GRAMÁTICA:::SEM:::ERRO");
+    break;
+    case 1 :
+    System.out.println("GRAMÁTICA:::COM:::ERRO");
+    break;
+    default :
+    break;
+  }*/
+  /*do {
 
         token_temporario = TkMgr.getNextToken();
 
@@ -90,7 +129,7 @@ public class AnalisadorLexico {
         else if (token_temporario.kind == LEXEMAS_INVALIDOS)
           System.out.println(" Erro léxico > " + token_temporario.image);
 
-    } while (token_temporario.kind != EOF);
+    } while (token_temporario.kind != EOF); */
 
   }
 
@@ -102,17 +141,15 @@ PARSER_END(AnalisadorLexico)
 TOKEN : {
       < #DIGITO : ["0"-"9"] >
     | < NUMEROINTEIRO : (<DIGITO>)+ >
-    | < NUMEROREAL : (<DIGITO>)+ "," (<DIGITO>)+ >
+    | < NUMEROREAL : (<DIGITO>)+ "." (<DIGITO>)+ >
     | < IDENTIFICADOR: (["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
 }
 
-//["n","t","r","\\","'","\""]
-
 TOKEN : {
-    < #CARACTER: "char" >
-  | < #REAL: "float" >
-  | < #INTEIRO: "int" >
-  | < #VAZIO: "void" >
+    < CARACTER: "char" >
+  | < REAL: "float" >
+  | < INTEIRO: "int" >
+  | < VAZIO: "void" >
   | < #EFAZER: "do" >
   | < #EPARA: "for" >
   | < #ESE: "if" >
@@ -172,8 +209,7 @@ SKIP : {
 }
 
 /* Tratando erros léxicos */
-SPECIAL_TOKEN :
-{
+SPECIAL_TOKEN : {
     <LEXEMAS_INVALIDOS: (~ ["a"-"z", "A"-"Z", "0"-"9", "\"", "(", ")", "[", "]", "{", "}", ";",",",
                           ".", "=", ">", "<", "+", "-", "*", "/","%", " ", "\t", "\n", "\r", "\f"])+ >
     {
@@ -183,14 +219,36 @@ SPECIAL_TOKEN :
 
 //Iniciando analisador sintático
 /*
-void inicial() : {} {
-    atribuicao()<PONTOVIRGULA> {}
+INCIAL -> ATRIBUIÇÃO;
+ATRIBUIÇÃO -> TIPO IDENTIFICADOR = ARITMETICO
+ARITMETICO -> EXPRESSAO
+EXPRESSAO -> NUMERO
+TIPO -> char | int | float | void
+
+int i = 0;
+*/
+
+int inicial() : {} {
+    atribuicao()<PONTOVIRGULA> { return 0; }
+  | { return 1; }
 }
 
 void atribuicao() : {} {
-  tipo() <IDENTIFICADOR>
+  tipo() <IDENTIFICADOR> <IGUAL> aritmetico()
 }
 
 void tipo() : {} {
-  < #CARACTER> | < #INTEIRO> | < #REAL> | < #VAZIO>
-} */
+    <CARACTER>
+  | <INTEIRO>
+  | <REAL>
+  | <VAZIO>
+}
+
+void aritmetico() : {} {
+   expressao()
+}
+
+void expressao() : {} {
+    <NUMEROINTEIRO>
+  | <NUMEROREAL>
+}
