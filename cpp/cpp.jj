@@ -26,7 +26,7 @@ import java.io.*;
 public class AnalisadorLexico {
 
   public static void main (String[] args) throws ParseException, FileNotFoundException {
-    SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/DAROAnalyzer/cpp/teste.txt"),0,0);
+    SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"),0,0);
     Token token_temporario = null;
     AnalisadorLexicoTokenManager TkMgr = new AnalisadorLexicoTokenManager(arquivo);
 
@@ -118,12 +118,11 @@ public class AnalisadorLexico {
 PARSER_END(AnalisadorLexico)
 
 TOKEN : {
-      < NUMERO : (["1"-"9"])* (["0"-"9"])+
-               | (["0"-"9"])+ "." (["0"-"9"])* | (["0"-"9"])* "." (["0"-"9"])+
-      >
-    | < IDENTIFICADOR:     ["n","t","r","\\","'","\""]
-                        | (["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
+      < NUMERO : (["1"-"9"])* (["0"-"9"])+ | (["0"-"9"])+ "." (["0"-"9"])* | (["0"-"9"])* "." (["0"-"9"])+ >
+    | < IDENTIFICADOR: ["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
 }
+
+//["n","t","r","\\","'","\""]
 
 TOKEN : {
     < #CARACTER: "char" >
