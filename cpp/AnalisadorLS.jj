@@ -11,46 +11,47 @@
 * VERSION 1
 */
 
+// * um ou mais
+// + zero ou mais
+
 options {
 
   STATIC = false;
   OUTPUT_DIRECTORY = "output/";
-  DEBUG_LOOKAHEAD = true;
+  //DEBUG_LOOKAHEAD = true;
 }
 
-PARSER_BEGIN(AnalisadorLexico)
+PARSER_BEGIN(AnalisadorLS)
 
 import java.io.*;
 
-public class AnalisadorLexico {
+public class AnalisadorLS {
 
   public static void main (String args []) throws ParseException {
-      AnalisadorLexico expressao = new AnalisadorLexico(System.in);
+      AnalisadorLS expressao = new AnalisadorLS(System.in);
       //Entrada:::terminal
-  //    while (true) {
-    //      try {
-            System.out.print("Entrada > ");
+      //while (true) {
+          System.out.print("Entrada: ");
+          try {
             switch (expressao.inicial()) {
                   case 0 :
-                          System.out.println("Sintaxe correta!");
-                          break;
+                  System.out.println("Sintaxe correta!");
+                  break;
                   case 1 :
-                          System.out.println("ERRO");
-                          break;
+                  System.out.println("ERRO:::sintático");
+                  break;
                   default :
-                          break;
-      //      }
-        /*  } catch (Exception erroExecao) {
-                System.out.println("Erro de Exeção");
-                System.out.println(erroExecao.getMessage()); }
-            catch (Error erroQualquer) {
-                System.out.println("Oops.");
-                System.out.println(erroQualquer.getMessage());
-                break; } */
-      }
+                  break;
+            }
+          } catch (Exception erroExcecao) {
+                System.out.println("Erro de Exeção!" + erroExcecao.getMessage()); }
+                    /*  catch (Error erroQualquer) {
+                          System.out.println("Oops.");
+                          System.out.println("Oops::: Erro não identificado!" + erroQualquer.getMessage()); } */
+      //}
       //Entrada:::arquivo
-      /*try {  // cria AS
-          SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"),0,0);
+      /*  // cria AS
+        try {  SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"),0,0);
           AnalisadorLexico expressao = new AnalisadorLexico(arquivo);
       } catch (java.io.FileNotFoundException msgnErro) {
              System.out.println("Arquivo não encontrado");
@@ -58,7 +59,6 @@ public class AnalisadorLexico {
     }
          try { expressao.inicial(); }  // chama o método que faz a análise
          catch (ParseException msgnErro) { System.err.println(msgnErro.getMessage()); }*/
-
   /*switch (AnalisadorLexico.inicial()) {
     case 0 :
     System.out.println("GRAMÁTICA:::SEM:::ERRO");
@@ -136,32 +136,33 @@ public class AnalisadorLexico {
 
 }
 
-PARSER_END(AnalisadorLexico)
+PARSER_END(AnalisadorLS)
 
 TOKEN : {
       < #DIGITO : ["0"-"9"] >
+    | < #LETRA: ["a"-"z","A"-"Z"] >
     | < NUMEROINTEIRO : (<DIGITO>)+ >
     | < NUMEROREAL : (<DIGITO>)+ "." (<DIGITO>)+ >
-    | < IDENTIFICADOR: (["a"-"z","A"-"Z"])+ | (["a"-"z","A"-"Z","0"-"9"])* >
+    | < IDENTIFICADOR: (["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
 }
 
 TOKEN : {
-    < CARACTER: "char" >
-  | < REAL: "float" >
-  | < INTEIRO: "int" >
-  | < VAZIO: "void" >
-  | < #EFAZER: "do" >
-  | < #EPARA: "for" >
-  | < #ESE: "if" >
-  | < #ESENAO: "else" >
-  | < #ERETORNO: "return" >
-  | < #PADRAO: "default">
-  | < #QUEBRAR: "break">
-  | < #CASO: "case" >
-  | < #EESCOLHA: "switch" >
-  | < #EENQUANTO: "while" >
-  | < #VERDADEIRO: "true" >
-  | < #FALSO: "false" >
+  //  < CARACTER: "char">
+    < INTEIRO: "int">
+  | < REAL: "float">
+  //| < VAZIO: "void">
+  /*| < FAZER: "do" >
+  | < PARA: "for" >
+  | < SE: "if" >
+  | < SENAO: "else" >
+  | < RETORNO: "return" >
+  | < PADRAO: "default">
+  | < QUEBRAR: "break">
+  | < CASO: "case" >
+  | < ESCOLHA: "switch" >
+  | < ENQUANTO: "while" >
+  | < VERDADEIRO: "true" >
+  | < FALSO: "false" >*/
 }
 
 TOKEN : {
@@ -211,7 +212,7 @@ SKIP : {
 /* Tratando erros léxicos */
 SPECIAL_TOKEN : {
     <LEXEMAS_INVALIDOS: (~ ["a"-"z", "A"-"Z", "0"-"9", "\"", "(", ")", "[", "]", "{", "}", ";",",",
-                          ".", "=", ">", "<", "+", "-", "*", "/","%", " ", "\t", "\n", "\r", "\f"])+ >
+                          ".", "=", ">", "<", "+", "-", "*", "/", " ", "\t", "\n", "\r", "\f"])+ >
     {
       System.err.println("Erro léxico::: [linha #" + input_stream.getEndLine() + "] --- [token #"+image+"] não reconhecido.");
     }
@@ -229,18 +230,15 @@ int i = 0;
 */
 
 int inicial() : {} {
-  (atribuicao() <PONTOVIRGULA>)* { return 0; }
+    (atribuicao() <PONTOVIRGULA>)* { return 0; }
 }
 
 void atribuicao() : {} {
-   (tipo())* (<IDENTIFICADOR>)* <IGUAL> (aritmetico())*
+   tipo() <IDENTIFICADOR> <IGUAL> (aritmetico())*
 }
 
 void tipo() : {} {
-    <CARACTER>
-  | <INTEIRO>
-  | <REAL>
-  | <VAZIO>
+   "int" | "float"
 }
 
 void aritmetico() : {} {
@@ -248,6 +246,5 @@ void aritmetico() : {} {
 }
 
 void expressao() : {} {
-    <NUMEROINTEIRO>
-  | <NUMEROREAL>
+    <NUMEROINTEIRO> | <NUMEROREAL>
 }

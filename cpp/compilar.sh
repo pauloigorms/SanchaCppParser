@@ -5,8 +5,8 @@
 
 #--- Commands --- #
 
-javacc cpp.jj
+javacc AnalisadorLS.jj
 chmod 777 output/
 cd output/
-javac AnalisadorLexico.java
-java AnalisadorLexico
+javac AnalisadorLS.java
+java AnalisadorLS
