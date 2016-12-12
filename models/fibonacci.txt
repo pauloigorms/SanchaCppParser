@@ -1,0 +1,22 @@
+// Este código apenas processa uma série de Fibonacci
+// Sintáticamente Correto
+
+int main(){
+
+	int i, max, primeiro = 0, segundo = 1, proximo;
+	
+	max = 10;
+ 
+	for(i = 0; i < max ; i++){
+		if(c <= 1){
+			next = c;
+        }else{
+			next = first + second;
+			first = second;
+			second = next;
+		}
+   }
+ 
+   return 0;
+   
+}
