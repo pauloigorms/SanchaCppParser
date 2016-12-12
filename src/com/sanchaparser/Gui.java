@@ -1,38 +1,53 @@
-import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
-import java.net.URL;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import javax.swing.event.MenuEvent;
-import javax.swing.event.MenuListener;
-import javax.swing.text.*;
 
+import com.sanchaparser.*;
+
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.*;
+import java.io.*;
+import java.net.URL;
+import java.util.HashMap;
+import javax.swing.*;
+import javax.swing.border.*;
+import javax.swing.event.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.text.*;
+import javax.swing.JFileChooser;
 
 class Gui extends JFrame{
+
+    private JTextArea entrada;
 
     Gui(){
         super("SanchaCppParser IDE");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        //URL iconURL = getClass().getResource("./img/girl.png");
-        //ImageIcon icon = new ImageIcon(iconURL);
-        //setIconImage(icon.getImage());
+        try {
+            ImageIcon icon = new ImageIcon(getClass().getResource("./img/girl.png"));
+            setIconImage(icon.getImage());
+        }catch (Exception e) {
+            System.out.println("Erro ao localizar ícone ./img/girl.png ~ " + e);
+        }
 
         menu();
 
+        Container content = getContentPane();
 
-        JTextArea textArea = new JTextArea("oi");
-        textArea.setSize(400,400);
-        textArea.setLineWrap(true);
-        textArea.setEditable(true);
-        textArea.setVisible(true);
-        JScrollPane scroll = new JScrollPane(textArea);
-        scroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        JTextArea entrada = new JTextArea("//Type your Cpp Program here...\n\n");
+        entrada.setSize(400, 400);
+        entrada.setTabSize(2);
+        entrada.setPreferredSize(new Dimension(400, 200));
+        entrada.setLineWrap(true);
 
-        getContentPane().add(scroll);
+        JScrollPane entradaIde = new JScrollPane(entrada);
+        TextLineNumber tln = new TextLineNumber(entrada);
+        entradaIde.setRowHeaderView(tln);
+
+        content.add(entradaIde);
+
+        this.entrada = entrada;
+
         setSize(500, 600);
         setVisible(true);
         setResizable(false);
@@ -70,10 +85,48 @@ class Gui extends JFrame{
     }
 
     private void actionAbrir(){
-        System.out.println("Abrir arquivo");
+        JFileChooser fileChooser = new JFileChooser();
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de texto (.txt) ", "txt", "text");
+        fileChooser.setFileFilter(filter);
+        if (fileChooser.showOpenDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            setEntrada("");
+            try {
+                BufferedReader in = new BufferedReader(new FileReader(file));
+                try {
+                    String line = in.readLine();
+                    while (line != null) {
+                        this.entrada.append(line + "\n");
+                        line = in.readLine();
+                    }
+                } catch (IOException e) {
+                    JOptionPane.showMessageDialog(this, "Erro: " + e);
+                }
+            }catch (FileNotFoundException e){
+                JOptionPane.showMessageDialog(this, "Erro: " + e);
+            }
+        }
     }
     private void actionSalvar(){}
-    private void actionCompilar(){}
+    private void actionCompilar(){
+
+        JFrame output = new JFrame("Output");
+        output.setSize(300, 400);
+        output.setVisible(true);
+        output.setResizable(false);
+
+        JTextArea saida = new JTextArea(getEntrada());
+        saida.setLineWrap(true);
+        saida.setEnabled(false);
+        saida.setBackground(Color.decode("#34495e"));
+        saida.setFont(new Font(null, 0, 14));
+
+        JScrollPane scrollSaida = new JScrollPane(saida);
+        scrollSaida.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+
+        output.getContentPane().add(saida);
+
+    }
     private void actionGithub(){
         try {
             Desktop.getDesktop().browse(new URL("https://github.com/pauloigormoraes/SanchaAnalyzer").toURI());
@@ -84,10 +137,12 @@ class Gui extends JFrame{
     private void actionSobre(){
         JOptionPane.showMessageDialog(this, "Mensagem bonitinha aquie o/");
     }
-    private void setEntrada(String entrada){}
+    private void setEntrada(String entrada){
+        this.entrada.setText(entrada);
+    }
     private void setSaida(String saida){}
     private String getEntrada(){
-        return null;
+        return this.entrada.getText();
     }
     private String getSaida(){
         return null;
