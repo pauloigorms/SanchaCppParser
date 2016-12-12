@@ -1,3 +1,23 @@
+/*
+**     _   _ _           _    _
+**    /_\ | | |_____ __ | |  (_)_ __  __ _
+**   / _ \| | / -_) \ / | |__| | '  \/ _` |
+**  /_/ \_\_|_\___/_\_\ |____|_|_|_|_\__,_|
+**
+**  By Allex Lima <allexlima@unn.edu.br> | www.allexlima.com
+**
+**
+**  Interface Gráfica com Java Swing para uma mini IDE Cpp
+**  a fim de ser utilizada no projeto SanchaCppParser, um
+**  analisador sintático para a linguagem de programação C++
+**  escrito em Java por meio do framework JavaCC
+**
+**  ~ Conheça o projeto: https://github.com/pauloigormoraes/SanchaCppParser
+**
+**  --
+**  Meu GiHub: https://github.com/allexlima
+*/
+
 package com.sanchaparser;
 
 import java.awt.*;
@@ -124,7 +144,26 @@ class Gui extends JFrame implements GerenciamentoArquivos{
     }
 
     public void actionSalvarArquivo(){
+        JFileChooser fileChooser = new JFileChooser("./models");
+        FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de texto (.txt) ", "txt", "text");
+        fileChooser.setFileFilter(filter);
+        if (fileChooser.showSaveDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
 
+            try(FileWriter fw = new FileWriter(file + ".txt")) {
+                fw.write(getEntrada());
+                fw.close();
+                updateTitle(file.toString());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void updateTitle(String address){
+        String[] parts = address.split("/");
+        String file = parts[parts.length - 1];
+        setTitle("SanchaCppParser IDE - " + file + ".txt");
     }
 
     private void actionAnalise(){
