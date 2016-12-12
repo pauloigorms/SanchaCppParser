@@ -27,25 +27,26 @@ public class AnalisadorLexico {
   public static void main (String args []) throws ParseException {
       AnalisadorLexico expressao = new AnalisadorLexico(System.in);
       //Entrada:::terminal
-      while (true) {
-          try {
+  //    while (true) {
+    //      try {
+            System.out.print("Entrada > ");
             switch (expressao.inicial()) {
                   case 0 :
-                  System.out.println("Sintaxe correta!");
-                  break;
+                          System.out.println("Sintaxe correta!");
+                          break;
                   case 1 :
-                  System.out.println("ERRO");
-                  break;
+                          System.out.println("ERRO");
+                          break;
                   default :
-                  break;
-            }
-          } catch (Exception erroExecao) {
+                          break;
+      //      }
+        /*  } catch (Exception erroExecao) {
                 System.out.println("Erro de Exeção");
                 System.out.println(erroExecao.getMessage()); }
             catch (Error erroQualquer) {
                 System.out.println("Oops.");
                 System.out.println(erroQualquer.getMessage());
-                break; }
+                break; } */
       }
       //Entrada:::arquivo
       /*try {  // cria AS
@@ -137,12 +138,11 @@ public class AnalisadorLexico {
 
 PARSER_END(AnalisadorLexico)
 
-
 TOKEN : {
       < #DIGITO : ["0"-"9"] >
     | < NUMEROINTEIRO : (<DIGITO>)+ >
     | < NUMEROREAL : (<DIGITO>)+ "." (<DIGITO>)+ >
-    | < IDENTIFICADOR: (["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
+    | < IDENTIFICADOR: (["a"-"z","A"-"Z"])+ | (["a"-"z","A"-"Z","0"-"9"])* >
 }
 
 TOKEN : {
@@ -229,12 +229,11 @@ int i = 0;
 */
 
 int inicial() : {} {
-    atribuicao()<PONTOVIRGULA> { return 0; }
-  | { return 1; }
+    atribuicao() <PONTOVIRGULA> { return 0; }
 }
 
 void atribuicao() : {} {
-  tipo() <IDENTIFICADOR> <IGUAL> aritmetico()
+   tipo() <IDENTIFICADOR> <IGUAL> aritmetico()
 }
 
 void tipo() : {} {
