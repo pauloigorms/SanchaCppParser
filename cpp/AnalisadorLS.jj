@@ -139,17 +139,9 @@ public class AnalisadorLS {
 PARSER_END(AnalisadorLS)
 
 TOKEN : {
-      < #DIGITO : ["0"-"9"] >
-    | < #LETRA: ["a"-"z","A"-"Z"] >
-    | < NUMEROINTEIRO : (<DIGITO>)+ >
-    | < NUMEROREAL : (<DIGITO>)+ "." (<DIGITO>)+ >
-    | < IDENTIFICADOR: (["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])* >
-}
-
-TOKEN : {
   //  < CARACTER: "char">
-    < INTEIRO: "int">
-  | < REAL: "float">
+     < INTEIRO: "int">
+   | < REAL: "float">
   //| < VAZIO: "void">
   /*| < FAZER: "do" >
   | < PARA: "for" >
@@ -164,6 +156,15 @@ TOKEN : {
   | < VERDADEIRO: "true" >
   | < FALSO: "false" >*/
 }
+
+TOKEN : {
+      < #DIGITO : ["0"-"9"] >
+    | < NUMEROINTEIRO : (<DIGITO>)+ >
+    | < NUMEROREAL : (<DIGITO>)+ "." (<DIGITO>)+ >
+    | < IDENTIFICADOR: ((["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])*) | (~["i"]["n"]["t"]) | (~["f"]["l"]["o"]["a"]["t"]) >
+}
+
+
 
 TOKEN : {
     < ECHAVE: "{" >
@@ -221,7 +222,7 @@ SPECIAL_TOKEN : {
 //Iniciando analisador sintático
 /*
 INCIAL -> ATRIBUIÇÃO;
-ATRIBUIÇÃO -> TIPO IDENTIFICADOR = ARITMETICO
+ATRIBUIÇÃO -> TIPO IDENTIFICADOR = ARITMETICO | TIPO IDENTIFICADOR | IDENTIFICADOR++
 ARITMETICO -> EXPRESSAO
 EXPRESSAO -> NUMERO
 TIPO -> char | int | float | void
@@ -230,11 +231,13 @@ int i = 0;
 */
 
 int inicial() : {} {
-    (atribuicao() <PONTOVIRGULA>)* { return 0; }
+    atribuicao() { return 0; }
 }
 
+
 void atribuicao() : {} {
-   tipo() <IDENTIFICADOR> <IGUAL> (aritmetico())*
+    tipo() <IDENTIFICADOR> <IGUAL> (aritmetico())* <PONTOVIRGULA>
+  | <IDENTIFICADOR><INCREMENTA>(<PONTOVIRGULA>)
 }
 
 void tipo() : {} {
@@ -248,3 +251,6 @@ void aritmetico() : {} {
 void expressao() : {} {
     <NUMEROINTEIRO> | <NUMEROREAL>
 }
+
+// * um ou mais
+// + zero ou mais
