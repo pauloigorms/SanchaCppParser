@@ -10,14 +10,19 @@ import javax.swing.JFileChooser;
 import org.fife.ui.rtextarea.*;
 import org.fife.ui.rsyntaxtextarea.*;
 
-class Gui extends JFrame{
+
+interface GerenciamentoArquivos{
+    void actionAbrirArquivo();
+    void actionSalvarArquivo();
+}
+
+class Gui extends JFrame implements GerenciamentoArquivos{
 
     private RSyntaxTextArea entrada;
     private Container janela;
 
     Gui(String tituloDaJanela){
         super(tituloDaJanela);
-
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela = getContentPane();
 
@@ -26,8 +31,8 @@ class Gui extends JFrame{
         setTextarea();
 
         setSize(500, 600);
+        setMinimumSize(new Dimension(500, 600));
         setVisible(true);
-        //setResizable(false);
     }
 
     private void setTextarea(){
@@ -86,7 +91,7 @@ class Gui extends JFrame{
         sobre.add(sSobre);
 
         aAbrir.addActionListener(actionEvent -> this.actionAbrirArquivo());
-        aSalvar.addActionListener(actionEvent -> this.actionSalvar());
+        aSalvar.addActionListener(actionEvent -> this.actionSalvarArquivo());
         fAnalisar.addActionListener(actionEvent -> this.actionAnalise());
         sGithub.addActionListener(actionEvent -> this.actionGithub());
         sSobre.addActionListener(actionEvent -> this.actionSobre());
@@ -94,8 +99,8 @@ class Gui extends JFrame{
         setJMenuBar(menuBar);
     }
 
-    private void actionAbrirArquivo(){
-        JFileChooser fileChooser = new JFileChooser();
+    public void actionAbrirArquivo(){
+        JFileChooser fileChooser = new JFileChooser("./models");
         FileNameExtensionFilter filter = new FileNameExtensionFilter("Arquivos de texto (.txt) ", "txt", "text");
         fileChooser.setFileFilter(filter);
         if (fileChooser.showOpenDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {
@@ -117,10 +122,15 @@ class Gui extends JFrame{
             }
         }
     }
-    private void actionSalvar(){}
+
+    public void actionSalvarArquivo(){
+
+    }
+
     private void actionAnalise(){
         setSaida("Compilado com sucesso  \n");
     }
+
     private void actionGithub(){
         try {
             Desktop.getDesktop().browse(new URL("https://github.com/pauloigormoraes/SanchaAnalyzer").toURI());
@@ -128,9 +138,15 @@ class Gui extends JFrame{
             e.printStackTrace();
         }
     }
+
     private void actionSobre(){
-        JOptionPane.showMessageDialog(this, "Mensagem bonitinha aquie o/");
+        JOptionPane.showMessageDialog(this,
+                "\nTrabalho desenvolvido para compor a nota parcial da 3ª ARE da disciplina de " +
+                        "Sistemas Operacionais,\n ministrada pelo Prof.ª M.Sc. Ângela Lima. " +
+                        "\n\nDesenvolvido por: Allex Lima, Daniel Bispo, Paulo Moraes e Renan Barroncas"
+        );
     }
+
     private void setSaida(String mensagem){
         JFrame output = new JFrame("Output");
         output.setSize(300, 400);
@@ -139,6 +155,7 @@ class Gui extends JFrame{
 
         JTextArea saida = new JTextArea(mensagem);
         saida.setLineWrap(true);
+        saida.setTabSize(2);
         saida.setEnabled(false);
         saida.setBackground(Color.decode("#34495e"));
         saida.setFont(new Font(null, 0, 14));
@@ -148,6 +165,7 @@ class Gui extends JFrame{
 
         output.getContentPane().add(saida);
     }
+
     private String getEntrada(){
         return this.entrada.getText();
     }
