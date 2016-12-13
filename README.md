@@ -15,7 +15,23 @@ _Dedicamos o nome e ícone deste projeto a nossa ex professora e orientadora [Pr
 2. [Uso básico](https://github.com/pauloigormoraes/SanchaCppParser#instalação-e-execução)
 
 #### Instalação e execução
+
+1. Clone o repositório
+
+    ```bash
+	$ git clone https://github.com/pauloigormoraes/SanchaCppParser.git
+	$ cd SanchaCppParser/
+    ```
+
+2. Execute o **SanchaCppParser**:
+
+    ```bash
+	$ java -jar SanchaCppParser.jar
+    ```
+
 #### Uso básico
+
+1. Após abrir 
 
 #### Equipe
 
