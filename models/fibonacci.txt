@@ -8,14 +8,15 @@ int main(){
 	max = 10;
 
 	for(i = 0; i < max ; i++){
+		
 		if(c <= 1){
-			next = c;
-        }else{
-			next = first + second;
-			first = second;
+			proximo = c;
+		}else{
+			proximo = primeiro + segundo;
+			primeiro = segundo;
 			second = next;
-		}
-   }
+			}
+	}
 
    return 0;
 

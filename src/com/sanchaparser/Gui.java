@@ -192,8 +192,8 @@ class Gui extends Interface{
 
     private void actionSobre(){
         JOptionPane.showMessageDialog(this,
-                "\nTrabalho desenvolvido para compor a nota parcial da 3ª ARE da disciplina de " +
-                        "Sistemas Operacionais,\n ministrada pelo Prof.ª M.Sc. Ângela Lima. " +
+                "\nTrabalho desenvolvido para compor a nota parcial da 3ª ARE da disciplina de \n" +
+                        "Computação Teórica/Compiladores, ministrada pelo Prof.º M.Sc. Camilo Souza" +
                         "\n\nDesenvolvido por: Allex Lima, Daniel Bispo, Paulo Moraes e Renan Barroncas"
         );
     }
