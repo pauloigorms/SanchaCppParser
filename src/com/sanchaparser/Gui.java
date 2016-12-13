@@ -72,7 +72,7 @@ class Gui extends Interface{
     }
 
     public void setFavicon(){
-        java.net.URL url = ClassLoader.getSystemResource("com/sanchaparser/img/girl.png");
+        java.net.URL url = ClassLoader.getSystemResource("com/sanchaparser/favicon.png");
 
         try {
             ImageIcon icon = new ImageIcon(url);
