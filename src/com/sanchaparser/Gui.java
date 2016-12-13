@@ -36,13 +36,18 @@ interface GerenciamentoArquivos{
     void actionSalvarArquivo();
 }
 
-class Gui extends JFrame implements GerenciamentoArquivos{
+abstract class Interface extends JFrame implements GerenciamentoArquivos{
+    abstract void setFavicon();
+    abstract void setMenuToolBar();
+}
+
+class Gui extends Interface{
 
     private RSyntaxTextArea entrada;
     private Container janela;
 
     Gui(String tituloDaJanela){
-        super(tituloDaJanela);
+        setTitle(tituloDaJanela);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela = getContentPane();
 
@@ -55,7 +60,7 @@ class Gui extends JFrame implements GerenciamentoArquivos{
         setVisible(true);
     }
 
-    private void setTextarea(){
+    public void setTextarea(){
         entrada = new RSyntaxTextArea("//Escreva seu programa aqui...\n\n");
         entrada.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         entrada.setCodeFoldingEnabled(true);
@@ -66,8 +71,8 @@ class Gui extends JFrame implements GerenciamentoArquivos{
         janela.add(entradaIde);
     }
 
-    private void setFavicon(){
-        java.net.URL url = ClassLoader.getSystemResource("com/sanchaparser/img/girl.png");
+    public void setFavicon(){
+        java.net.URL url = ClassLoader.getSystemResource("com/sanchaparser/favicon.png");
 
         try {
             ImageIcon icon = new ImageIcon(url);
@@ -79,7 +84,7 @@ class Gui extends JFrame implements GerenciamentoArquivos{
         }
     }
 
-    private void setMenuToolBar(){
+    public void setMenuToolBar(){
         JMenuBar menuBar = new JMenuBar();
 
         JMenu arquivo = new JMenu("Arquivo");
@@ -92,6 +97,7 @@ class Gui extends JFrame implements GerenciamentoArquivos{
 
         JMenuItem aAbrir = new JMenuItem("Abrir");
         JMenuItem aSalvar = new JMenuItem("Salvar");
+        JMenuItem fLexemas = new JMenuItem("Analisar lexemas");
         JMenuItem fAnalisar = new JMenuItem("Analisar sintaxe");
         JMenuItem fCompilar = new JMenuItem("Compilar");
         JMenuItem fConfiguracoes = new JMenuItem("Configurações");
@@ -103,6 +109,7 @@ class Gui extends JFrame implements GerenciamentoArquivos{
 
         arquivo.add(aAbrir);
         arquivo.add(aSalvar);
+        ferramentas.add(fLexemas);
         ferramentas.add(fAnalisar);
         ferramentas.add(fCompilar);
         ferramentas.addSeparator();
@@ -112,7 +119,8 @@ class Gui extends JFrame implements GerenciamentoArquivos{
 
         aAbrir.addActionListener(actionEvent -> this.actionAbrirArquivo());
         aSalvar.addActionListener(actionEvent -> this.actionSalvarArquivo());
-        fAnalisar.addActionListener(actionEvent -> this.actionAnalise());
+        fLexemas.addActionListener(actionEvent -> this.actionAnaliseLexica());
+        fAnalisar.addActionListener(actionEvent -> this.actionAnaliseSintatica());
         sGithub.addActionListener(actionEvent -> this.actionGithub());
         sSobre.addActionListener(actionEvent -> this.actionSobre());
 
@@ -166,7 +174,11 @@ class Gui extends JFrame implements GerenciamentoArquivos{
         setTitle("SanchaCppParser IDE - " + file + ".txt");
     }
 
-    private void actionAnalise(){
+    private void actionAnaliseLexica(){
+        setSaida("Compilado com sucesso  \n");
+    }
+
+    private void actionAnaliseSintatica(){
         setSaida("Compilado com sucesso  \n");
     }
 
@@ -180,8 +192,8 @@ class Gui extends JFrame implements GerenciamentoArquivos{
 
     private void actionSobre(){
         JOptionPane.showMessageDialog(this,
-                "\nTrabalho desenvolvido para compor a nota parcial da 3ª ARE da disciplina de " +
-                        "Sistemas Operacionais,\n ministrada pelo Prof.ª M.Sc. Ângela Lima. " +
+                "\nTrabalho desenvolvido para compor a nota parcial da 3ª ARE da disciplina de \n" +
+                        "Computação Teórica/Compiladores, ministrada pelo Prof.º M.Sc. Camilo Souza" +
                         "\n\nDesenvolvido por: Allex Lima, Daniel Bispo, Paulo Moraes e Renan Barroncas"
         );
     }
