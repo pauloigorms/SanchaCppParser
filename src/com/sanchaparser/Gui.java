@@ -97,6 +97,7 @@ class Gui extends Interface{
 
         JMenuItem aAbrir = new JMenuItem("Abrir");
         JMenuItem aSalvar = new JMenuItem("Salvar");
+        JMenuItem fLexemas = new JMenuItem("Analisar lexemas");
         JMenuItem fAnalisar = new JMenuItem("Analisar sintaxe");
         JMenuItem fCompilar = new JMenuItem("Compilar");
         JMenuItem fConfiguracoes = new JMenuItem("Configurações");
@@ -108,6 +109,7 @@ class Gui extends Interface{
 
         arquivo.add(aAbrir);
         arquivo.add(aSalvar);
+        ferramentas.add(fLexemas);
         ferramentas.add(fAnalisar);
         ferramentas.add(fCompilar);
         ferramentas.addSeparator();
@@ -117,7 +119,8 @@ class Gui extends Interface{
 
         aAbrir.addActionListener(actionEvent -> this.actionAbrirArquivo());
         aSalvar.addActionListener(actionEvent -> this.actionSalvarArquivo());
-        fAnalisar.addActionListener(actionEvent -> this.actionAnalise());
+        fLexemas.addActionListener(actionEvent -> this.actionAnaliseLexica());
+        fAnalisar.addActionListener(actionEvent -> this.actionAnaliseSintatica());
         sGithub.addActionListener(actionEvent -> this.actionGithub());
         sSobre.addActionListener(actionEvent -> this.actionSobre());
 
@@ -171,7 +174,11 @@ class Gui extends Interface{
         setTitle("SanchaCppParser IDE - " + file + ".txt");
     }
 
-    private void actionAnalise(){
+    private void actionAnaliseLexica(){
+        setSaida("Compilado com sucesso  \n");
+    }
+
+    private void actionAnaliseSintatica(){
         setSaida("Compilado com sucesso  \n");
     }
 
