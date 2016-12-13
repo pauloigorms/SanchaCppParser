@@ -13,21 +13,21 @@
 options {
 
   STATIC = false;
-  OUTPUT_DIRECTORY = "output/";
+  OUTPUT_DIRECTORY = "sintatico/";
   //DEBUG_LOOKAHEAD = true;
 }
 
-PARSER_BEGIN(AnalisadorLS)
+PARSER_BEGIN(AnalisadorSintatico)
 
 import java.io.*;
 
-public class AnalisadorLS {
+public class AnalisadorSintatico {
 
   public static void main (String args []) throws ParseException, FileNotFoundException {
 
     int contadorErroS = 0;
     //AnalisadorLS expressao = new AnalisadorLS(System.in);
-    AnalisadorLS expressao = new AnalisadorLS(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/models/errados/repeticao.cpp"));
+    AnalisadorSintatico expressao = new AnalisadorSintatico(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/models/correct/repeticao.cpp"));
 
       //while(true) {
         //Entrada:::terminal
@@ -50,73 +50,76 @@ public class AnalisadorLS {
             }
         //}
 
-/*  do {
-        token_temporario = TkMgr.getNextToken();
+/*        do {
 
-        if (token_temporario.kind == DIGITO)
-          System.out.println("Numérico > " + token_temporario);
+            token_temporario = TkMgr.getNextToken();
 
-        else if (token_temporario.kind == IDENTIFICADOR)
-          System.out.println("Identificador > " + token_temporario);
+            if (token_temporario.kind == DIGITO)
+              System.out.println("Numérico > " + token_temporario);
 
-        else if (token_temporario.kind == CARACTER)
-          System.out.println("Char > " + token_temporario);
+            else if (token_temporario.kind == IDENTIFICADOR)
+              System.out.println("Identificador > " + token_temporario);
 
-        else if (token_temporario.kind == NUMEROREAL)
-          System.out.println("Real > " + token_temporario);
+            else if (token_temporario.kind == CARACTER)
+              System.out.println("Char > " + token_temporario);
 
-        else if (token_temporario.kind == NUMEROINTEIRO)
-          System.out.println("Inteiro > " + token_temporario);
+            else if (token_temporario.kind == NUMEROREAL)
+              System.out.println("Real > " + token_temporario);
 
-        else if (token_temporario.kind == VAZIO)
-          System.out.println("Void > " + token_temporario);
+            else if (token_temporario.kind == NUMEROINTEIRO)
+              System.out.println("Inteiro > " + token_temporario);
 
-        else if (token_temporario.kind == EFAZER || token_temporario.kind == EENQUANTO || token_temporario.kind == EPARA || token_temporario.kind == CASO || token_temporario.kind == QUEBRAR || token_temporario.kind == EESCOLHA)
-          System.out.println("Laço de repetição > " + token_temporario);
+            else if (token_temporario.kind == VAZIO)
+              System.out.println("Void > " + token_temporario);
 
-        else if (token_temporario.kind == ESE || token_temporario.kind == ESENAO)
-          System.out.println("Laço de condição > " + token_temporario);
+            else if (token_temporario.kind == EFAZER || token_temporario.kind == EENQUANTO || token_temporario.kind == EPARA || token_temporario.kind == CASO || token_temporario.kind == QUEBRAR || token_temporario.kind == EESCOLHA)
+              System.out.println("Laço de repetição > " + token_temporario);
 
-        else if (token_temporario.kind == VERDADEIRO || token_temporario.kind == FALSO)
-          System.out.println("Verificação lógico > " + token_temporario);
+            else if (token_temporario.kind == ESE || token_temporario.kind == ESENAO)
+              System.out.println("Laço de condição > " + token_temporario);
 
-        else if (token_temporario.kind == ERETORNO || token_temporario.kind == PADRAO)
-          System.out.println("Laços de definição > " + token_temporario);
+            else if (token_temporario.kind == VERDADEIRO || token_temporario.kind == FALSO)
+              System.out.println("Verificação lógico > " + token_temporario);
 
-        else if (token_temporario.kind == ECHAVE || token_temporario.kind == DCHAVE)
-          System.out.println("Chave > " + token_temporario);
+            else if (token_temporario.kind == ERETORNO || token_temporario.kind == PADRAO)
+              System.out.println("Laços de definição > " + token_temporario);
 
-        else if (token_temporario.kind == EPARENTESE || token_temporario.kind == DPARENTESE)
-          System.out.println("Parêntese > " + token_temporario);
+            else if (token_temporario.kind == ECHAVE || token_temporario.kind == DCHAVE || token_temporario.kind == MENORMENOR || token_temporario.kind == MAIORMAIOR)
+              System.out.println("Símbolo > " + token_temporario);
 
-        else if (token_temporario.kind == PONTOVIRGULA || token_temporario.kind == DOISPONTOS || token_temporario.kind == VIRGULA)
-          System.out.println("Pontuação > " + token_temporario);
+            else if (token_temporario.kind == EPARENTESE || token_temporario.kind == DPARENTESE)
+              System.out.println("Símbolo > " + token_temporario);
 
-        else if (token_temporario.kind == IGUAL)
-          System.out.println("Atribuição > " + token_temporario);
+            else if (token_temporario.kind == PONTOVIRGULA || token_temporario.kind == DOISPONTOS || token_temporario.kind == VIRGULA)
+              System.out.println("Símbolo > " + token_temporario);
 
-        else if (token_temporario.kind == OULOGICO || token_temporario.kind == ELOGICO || token_temporario.kind == IGUALIGUAL || token_temporario.kind == DIFERENTE)
-          System.out.println("Comparação lógico > " + token_temporario);
+            else if (token_temporario.kind == IGUAL)
+              System.out.println("Atribuição > " + token_temporario);
 
-        else if (token_temporario.kind == MENOR || token_temporario.kind == MAIOR || token_temporario.kind == MENORIGUAL || token_temporario.kind == MAIORIGUAL)
-          System.out.println("Comparação matemática > " + token_temporario);
+            else if (token_temporario.kind == OULOGICO || token_temporario.kind == ELOGICO || token_temporario.kind == IGUALIGUAL || token_temporario.kind == DIFERENTE)
+              System.out.println("Comparação lógico > " + token_temporario);
 
-        else if (token_temporario.kind == MAIS || token_temporario.kind == MENOS || token_temporario.kind == MULTIPLICACAO || token_temporario.kind == DIVISAO)
-          System.out.println("Aritmético > " + token_temporario);
+            else if (token_temporario.kind == MENOR || token_temporario.kind == MAIOR || token_temporario.kind == MENORIGUAL || token_temporario.kind == MAIORIGUAL)
+              System.out.println("Comparação matemática > " + token_temporario);
 
-        else if (token_temporario.kind == INCREMENTA || token_temporario.kind == DECREMENTA)
-          System.out.println("Incrementação > " + token_temporario);
+            else if (token_temporario.kind == MAIS || token_temporario.kind == MENOS || token_temporario.kind == MULTIPLICACAO || token_temporario.kind == DIVISAO)
+              System.out.println("Aritmético > " + token_temporario);
 
-        else if (token_temporario.kind == LEXEMAS_INVALIDOS)
-          System.out.println(" Erro léxico > " + token_temporario.image);
+            else if (token_temporario.kind == INCREMENTA || token_temporario.kind == DECREMENTA)
+              System.out.println("Incrementação > " + token_temporario);
 
-    } while (token_temporario.kind != EOF); */
+            else if (token_temporario.kind == COMENTARIO_BLOCO)
+              System.out.println("Cometário bloco > " + token_temporario);
 
+            else if (token_temporario.kind == LEXEMAS_INVALIDOS)
+              System.out.println(" Erro léxico > " + token_temporario.image);
+
+        } while (token_temporario.kind != EOF); */
   }
 
 }
 
-PARSER_END(AnalisadorLS)
+PARSER_END(AnalisadorSintatico)
 
 //Iniciando analisador léxico
 TOKEN : {
@@ -173,10 +176,14 @@ TOKEN : {
   | < DIVISAO: "/" >
   | < INCREMENTA: "++" >
   | < DECREMENTA: "--" >
+  | < MENORMENOR: "<<">
+  | < MAIORMAIOR: ">>">
+  | < ASPAS: "\"">
 }
 
 SKIP : {
     " "
+  | "#"
   | "\t"
   | "\n"
   | "\r"
@@ -196,7 +203,7 @@ SKIP : {
 /* Tratando erros léxicos */
 SPECIAL_TOKEN : {
     <LEXEMAS_INVALIDOS: (~ ["a"-"z", "A"-"Z", "0"-"9", "\"", "(", ")", "[", "]", "{", "}", ";",",",
-                          ".", "=", ">", "<", "+", "-", "*", "/", " ", "\t", "\n", "\r", "\f"])+ >
+                          ".", "=", ">", "<", "+", "#", "-", "*", "/", " ", "\t", "\n", "\r", "\f"])+ >
     {
       System.err.println("Erro léxico::: [linha #" + input_stream.getEndLine() + "] --- [token #"+image+"] não reconhecido.");
     }
@@ -212,7 +219,7 @@ int inicial() : {} {
 void atribuicao() : {} {
     tipo() <IDENTIFICADOR> ((<IGUAL> aritmetico())+ <PONTOVIRGULA>
          | <EPARENTESE> <DPARENTESE> <ECHAVE> (para() | bloco() ) <DCHAVE> | <PONTOVIRGULA> )
-  | <IDENTIFICADOR> ( ((<INCREMENTA> | <DECREMENTA>) (<PONTOVIRGULA>)*) | aritmetico() <PONTOVIRGULA> )
+  | <IDENTIFICADOR> ( ((<INCREMENTA> | <DECREMENTA>) (<PONTOVIRGULA>)*) | aritmetico() <PONTOVIRGULA>  | atribuirfuncao())
 }
 
 void condicao() : {} {
@@ -233,6 +240,10 @@ void repeticao() : {} {
 
 void tipo() : {} {
   "char" | "int" | "float" | "void"
+}
+
+void atribuirfuncao() : {} {
+  <IDENTIFICADOR> (<MENORMENOR> | <MAIORMAIOR>) <ASPAS> (<IDENTIFICADOR>)* <ASPAS> <PONTOVIRGULA>
 }
 
 void comparacao() : {} {

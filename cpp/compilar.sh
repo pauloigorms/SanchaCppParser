@@ -5,8 +5,8 @@
 
 #--- Commands --- #
 
-javacc AnalisadorLS.jj
-chmod 777 output/
-cd output/
-javac AnalisadorLS.java
-java AnalisadorLS
+javacc AnalisadorSintatico.jj
+chmod 777 sintatico/
+cd sintatico/
+javac AnalisadorSintatico.java
+java AnalisadorSintatico
