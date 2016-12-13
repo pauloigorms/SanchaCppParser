@@ -1,1 +1,9 @@
-int i = 0;
+/*if(i > 4) {
+  int exemplo() { break; }
+}*/
+
+int exemplo() {
+
+  int  = 2015;
+
+}

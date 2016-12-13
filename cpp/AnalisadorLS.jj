@@ -11,9 +11,6 @@
 * VERSION 1
 */
 
-// * um ou mais
-// + zero ou mais
-
 options {
 
   STATIC = false;
@@ -27,11 +24,15 @@ import java.io.*;
 
 public class AnalisadorLS {
 
-  public static void main (String args []) throws ParseException {
-      AnalisadorLS expressao = new AnalisadorLS(System.in);
+  public static void main (String args []) throws ParseException, FileNotFoundException {
+
+    int contadorErroS = 0;
+    //AnalisadorLS expressao = new AnalisadorLS(System.in);
+    AnalisadorLS expressao = new AnalisadorLS(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"));
+
       //Entrada:::terminal
-      //while (true) {
-          System.out.print("Entrada: ");
+      //while(true) {
+          //System.out.print("Entrada: ");
           try {
             switch (expressao.inicial()) {
                   case 0 :
@@ -43,34 +44,14 @@ public class AnalisadorLS {
                   default :
                   break;
             }
-          } catch (Exception erroExcecao) {
-                System.out.println("Erro de Exeção!" + erroExcecao.getMessage()); }
-                    /*  catch (Error erroQualquer) {
-                          System.out.println("Oops.");
-                          System.out.println("Oops::: Erro não identificado!" + erroQualquer.getMessage()); } */
-      //}
-      //Entrada:::arquivo
-      /*  // cria AS
-        try {  SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"),0,0);
-          AnalisadorLexico expressao = new AnalisadorLexico(arquivo);
-      } catch (java.io.FileNotFoundException msgnErro) {
-             System.out.println("Arquivo não encontrado");
-      return;
-    }
-         try { expressao.inicial(); }  // chama o método que faz a análise
-         catch (ParseException msgnErro) { System.err.println(msgnErro.getMessage()); }*/
-  /*switch (AnalisadorLexico.inicial()) {
-    case 0 :
-    System.out.println("GRAMÁTICA:::SEM:::ERRO");
-    break;
-    case 1 :
-    System.out.println("GRAMÁTICA:::COM:::ERRO");
-    break;
-    default :
-    break;
-  }*/
-  /*do {
+          } /*catch (Exception erroExcecao) {
+                System.out.println("Erro de Exeção!" + erroExcecao.getMessage()); }*/
+                catch (ParseException parse) {
+                  System.out.println("Erro sintático::: próximo ao [token #" + expressao.getNextToken() + "] \nEntendendo erro::: " + parse.getMessage());
+                }
+        //}
 
+/*  do {
         token_temporario = TkMgr.getNextToken();
 
         if (token_temporario.kind == DIGITO)
@@ -139,32 +120,35 @@ public class AnalisadorLS {
 PARSER_END(AnalisadorLS)
 
 TOKEN : {
-  //  < CARACTER: "char">
-     < INTEIRO: "int">
-   | < REAL: "float">
-  //| < VAZIO: "void">
-  /*| < FAZER: "do" >
+    < CARACTER: "char">
+  | < INTEIRO: "int">
+  | < REAL: "float">
+  | < VAZIO: "void">
+  | < FAZER: "do" >
   | < PARA: "for" >
   | < SE: "if" >
   | < SENAO: "else" >
-  | < RETORNO: "return" >
+  | < RETORNO: "back" >
   | < PADRAO: "default">
   | < QUEBRAR: "break">
   | < CASO: "case" >
   | < ESCOLHA: "switch" >
   | < ENQUANTO: "while" >
   | < VERDADEIRO: "true" >
-  | < FALSO: "false" >*/
+  | < FALSO: "false" >
 }
 
 TOKEN : {
       < #DIGITO : ["0"-"9"] >
     | < NUMEROINTEIRO : (<DIGITO>)+ >
     | < NUMEROREAL : (<DIGITO>)+ "." (<DIGITO>)+ >
-    | < IDENTIFICADOR: ((["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])*) | (~["i"]["n"]["t"]) | (~["f"]["l"]["o"]["a"]["t"]) >
+    | < #LEXEMA_NEGAR : (~["i"]["n"]["t"]) | (~["f"]["l"]["o"]["a"]["t"]) | (~["c"]["h"]["a"]["a"]["r"])
+                      | (~["v"]["o"]["i"]["d"]) | (~["d"]["o"]) | (~["f"]["o"]["r"]) | (~["i"]["f"])
+                      | (~["e"]["l"]["s"]["e"]) | (~["b"]["a"]["c"]["k"]) | (~["d"]["e"]["f"]["a"]["u"]["l"]["t"])
+                      | (~["b"]["r"]["e"]["a"]["k"]) | (~["c"]["a"]["s"]["e"]) | (~["s"]["w"]["i"]["t"]["c"]["h"])
+                      | (~["w"]["h"]["i"]["l"]["e"]) | (~["t"]["r"]["u"]["e"]) | (~["f"]["a"]["l"]["e"]) >
+    | < IDENTIFICADOR: ((["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])*) | <LEXEMA_NEGAR> >
 }
-
-
 
 TOKEN : {
     < ECHAVE: "{" >
@@ -202,7 +186,6 @@ SKIP : {
 
 <COMENTARIO_LINHA> SKIP: {
   "//" : DEFAULT
-  | <~[]>
 }
 
 <COMENTARIO_BLOCO> SKIP: {
@@ -220,28 +203,59 @@ SPECIAL_TOKEN : {
 }
 
 //Iniciando analisador sintático
-/*
-INCIAL -> ATRIBUIÇÃO;
-ATRIBUIÇÃO -> TIPO IDENTIFICADOR = ARITMETICO | TIPO IDENTIFICADOR | IDENTIFICADOR++
-ARITMETICO -> EXPRESSAO
-EXPRESSAO -> NUMERO
-TIPO -> char | int | float | void
-
-int i = 0;
-*/
 
 int inicial() : {} {
     atribuicao() { return 0; }
+  | condicao() { return 0; }
+  | repeticao() { return 0; }
 }
 
-
 void atribuicao() : {} {
-    tipo() <IDENTIFICADOR> <IGUAL> (aritmetico())* <PONTOVIRGULA>
-  | <IDENTIFICADOR><INCREMENTA>(<PONTOVIRGULA>)
+    tipo() <IDENTIFICADOR> ((<IGUAL> aritmetico())+ <PONTOVIRGULA>
+         | <EPARENTESE> <DPARENTESE> <ECHAVE> (para() | bloco() ) <DCHAVE> | <PONTOVIRGULA> )
+  | <IDENTIFICADOR> ( ((<INCREMENTA> | <DECREMENTA>) (<PONTOVIRGULA>)*) | aritmetico() <PONTOVIRGULA> )
+}
+
+void condicao() : {} {
+  <SE> <EPARENTESE> comparacao() <DPARENTESE> <ECHAVE> bloco() <DCHAVE>
+}
+
+void para() : {} {
+  "for" <EPARENTESE> atribuicao() comparacao() atribuicao() <DPARENTESE> <ECHAVE> bloco() <DCHAVE>
+}
+
+void facaenquanto() : {} {
+  "do" <ECHAVE> bloco() <DCHAVE> "while" <EPARENTESE> comparacao() <DPARENTESE>
+}
+
+void repeticao() : {} {
+  para() | facaenquanto()
 }
 
 void tipo() : {} {
-   "int" | "float"
+  "char" | "int" | "float" | "void"
+}
+
+void comparacao() : {} {
+  atcond() ( <MAIOR> atcond()
+            | <MENOR> atcond()
+            | <IGUALIGUAL> atcond()
+            | <MAIORIGUAL> atcond()
+            | <MENORIGUAL> atcond()
+            | <DIFERENTE> atcond()
+            | condicao()   <ELOGICO> condicao()
+                         | <OULOGICO> condicao())
+           (<PONTOVIRGULA>)*
+}
+
+void atcond() : {} {
+  <IDENTIFICADOR> | expressao() | "true" | "false"
+}
+
+void bloco() : {} {
+    atribuicao()
+  | "break" <PONTOVIRGULA>
+  | "back" (<IDENTIFICADOR> <PONTOVIRGULA> | expressao() <PONTOVIRGULA>)
 }
 
 void aritmetico() : {} {
