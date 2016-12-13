@@ -36,13 +36,18 @@ interface GerenciamentoArquivos{
     void actionSalvarArquivo();
 }
 
-class Gui extends JFrame implements GerenciamentoArquivos{
+abstract class Interface extends JFrame implements GerenciamentoArquivos{
+    abstract void setFavicon();
+    abstract void setMenuToolBar();
+}
+
+class Gui extends Interface{
 
     private RSyntaxTextArea entrada;
     private Container janela;
 
     Gui(String tituloDaJanela){
-        super(tituloDaJanela);
+        setTitle(tituloDaJanela);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela = getContentPane();
 
@@ -55,7 +60,7 @@ class Gui extends JFrame implements GerenciamentoArquivos{
         setVisible(true);
     }
 
-    private void setTextarea(){
+    public void setTextarea(){
         entrada = new RSyntaxTextArea("//Escreva seu programa aqui...\n\n");
         entrada.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         entrada.setCodeFoldingEnabled(true);
@@ -66,7 +71,7 @@ class Gui extends JFrame implements GerenciamentoArquivos{
         janela.add(entradaIde);
     }
 
-    private void setFavicon(){
+    public void setFavicon(){
         java.net.URL url = ClassLoader.getSystemResource("com/sanchaparser/img/girl.png");
 
         try {
@@ -79,7 +84,7 @@ class Gui extends JFrame implements GerenciamentoArquivos{
         }
     }
 
-    private void setMenuToolBar(){
+    public void setMenuToolBar(){
         JMenuBar menuBar = new JMenuBar();
 
         JMenu arquivo = new JMenu("Arquivo");
