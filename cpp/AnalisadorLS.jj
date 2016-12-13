@@ -1,5 +1,5 @@
 /**
-* Copyright @ DARO Analyzer
+* Copyright @ SanchaCppParser
 *
 * Corporation: Minerva Project
 * Date: 12/13/16
@@ -7,7 +7,6 @@
 *          Daniel Bispo
 *          Paulo Moraes    http://pauloigormoraes.com
 *          Renan Barroncas
-*
 * VERSION 1
 */
 
@@ -28,11 +27,11 @@ public class AnalisadorLS {
 
     int contadorErroS = 0;
     //AnalisadorLS expressao = new AnalisadorLS(System.in);
-    AnalisadorLS expressao = new AnalisadorLS(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"));
+    AnalisadorLS expressao = new AnalisadorLS(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/models/errados/repeticao.cpp"));
 
-      //Entrada:::terminal
       //while(true) {
-          //System.out.print("Entrada: ");
+        //Entrada:::terminal
+          //System.out.print("Entrada para análise: ");
           try {
             switch (expressao.inicial()) {
                   case 0 :
@@ -46,9 +45,9 @@ public class AnalisadorLS {
             }
           } /*catch (Exception erroExcecao) {
                 System.out.println("Erro de Exeção!" + erroExcecao.getMessage()); }*/
-                catch (ParseException parse) {
-                  System.out.println("Erro sintático::: próximo ao [token #" + expressao.getNextToken() + "] \nEntendendo erro::: " + parse.getMessage());
-                }
+            catch (ParseException parse) {
+              System.out.println("Erro sintático::: próximo ao [token #" + expressao.getNextToken() + "] \nEntendendo erro::: " + parse.getMessage());
+            }
         //}
 
 /*  do {
@@ -119,6 +118,7 @@ public class AnalisadorLS {
 
 PARSER_END(AnalisadorLS)
 
+//Iniciando analisador léxico
 TOKEN : {
     < CARACTER: "char">
   | < INTEIRO: "int">
@@ -203,7 +203,6 @@ SPECIAL_TOKEN : {
 }
 
 //Iniciando analisador sintático
-
 int inicial() : {} {
     atribuicao() { return 0; }
   | condicao() { return 0; }
