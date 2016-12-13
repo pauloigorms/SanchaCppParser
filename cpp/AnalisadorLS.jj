@@ -30,7 +30,7 @@ public class AnalisadorLS {
   public static void main (String args []) throws ParseException {
       AnalisadorLS expressao = new AnalisadorLS(System.in);
       //Entrada:::terminal
-      //while (true) {
+      while(true) {
           System.out.print("Entrada: ");
           try {
             switch (expressao.inicial()) {
@@ -45,30 +45,7 @@ public class AnalisadorLS {
             }
           } catch (Exception erroExcecao) {
                 System.out.println("Erro de Exeção!" + erroExcecao.getMessage()); }
-                    /*  catch (Error erroQualquer) {
-                          System.out.println("Oops.");
-                          System.out.println("Oops::: Erro não identificado!" + erroQualquer.getMessage()); } */
-      //}
-      //Entrada:::arquivo
-      /*  // cria AS
-        try {  SimpleCharStream arquivo = new SimpleCharStream(new FileInputStream("/home/pmoraes/Documents/SanchaCppParser/cpp/teste.txt"),0,0);
-          AnalisadorLexico expressao = new AnalisadorLexico(arquivo);
-      } catch (java.io.FileNotFoundException msgnErro) {
-             System.out.println("Arquivo não encontrado");
-      return;
-    }
-         try { expressao.inicial(); }  // chama o método que faz a análise
-         catch (ParseException msgnErro) { System.err.println(msgnErro.getMessage()); }*/
-  /*switch (AnalisadorLexico.inicial()) {
-    case 0 :
-    System.out.println("GRAMÁTICA:::SEM:::ERRO");
-    break;
-    case 1 :
-    System.out.println("GRAMÁTICA:::COM:::ERRO");
-    break;
-    default :
-    break;
-  }*/
+        }
   /*do {
 
         token_temporario = TkMgr.getNextToken();
@@ -139,11 +116,11 @@ public class AnalisadorLS {
 PARSER_END(AnalisadorLS)
 
 TOKEN : {
-  //  < CARACTER: "char">
-     < INTEIRO: "int">
-   | < REAL: "float">
-  //| < VAZIO: "void">
-  /*| < FAZER: "do" >
+    < CARACTER: "char">
+  | < INTEIRO: "int">
+  | < REAL: "float">
+  | < VAZIO: "void">
+  | < FAZER: "do" >
   | < PARA: "for" >
   | < SE: "if" >
   | < SENAO: "else" >
@@ -154,17 +131,20 @@ TOKEN : {
   | < ESCOLHA: "switch" >
   | < ENQUANTO: "while" >
   | < VERDADEIRO: "true" >
-  | < FALSO: "false" >*/
+  | < FALSO: "false" >
 }
 
 TOKEN : {
       < #DIGITO : ["0"-"9"] >
     | < NUMEROINTEIRO : (<DIGITO>)+ >
     | < NUMEROREAL : (<DIGITO>)+ "." (<DIGITO>)+ >
-    | < IDENTIFICADOR: ((["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])*) | (~["i"]["n"]["t"]) | (~["f"]["l"]["o"]["a"]["t"]) >
+    | < #LEXEMA_NEGAR : (~["i"]["n"]["t"]) | (~["f"]["l"]["o"]["a"]["t"]) | (~["c"]["h"]["a"]["a"]["r"])
+                      | (~["v"]["o"]["i"]["d"]) | (~["d"]["o"]) | (~["f"]["o"]["r"]) | (~["i"]["f"])
+                      | (~["e"]["l"]["s"]["e"]) | (~["r"]["e"]["t"]["u"]["r"]["n"]) | (~["d"]["e"]["f"]["a"]["u"]["l"]["t"])
+                      | (~["b"]["r"]["e"]["a"]["k"]) | (~["c"]["a"]["s"]["e"]) | (~["s"]["w"]["i"]["t"]["c"]["h"])
+                      | (~["w"]["h"]["i"]["l"]["e"]) | (~["t"]["r"]["u"]["e"]) | (~["f"]["a"]["l"]["e"]) >
+    | < IDENTIFICADOR: ((["a"-"z","A"-"Z"])+ (["a"-"z","A"-"Z","0"-"9"])*) | <LEXEMA_NEGAR> >
 }
-
-
 
 TOKEN : {
     < ECHAVE: "{" >
@@ -241,7 +221,7 @@ void atribuicao() : {} {
 }
 
 void tipo() : {} {
-   "int" | "float"
+  "char" | "int" | "float" | "void"
 }
 
 void aritmetico() : {} {
