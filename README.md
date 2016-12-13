@@ -31,7 +31,28 @@ _Dedicamos o nome e ícone deste projeto a nossa ex professora e orientadora [Pr
 
 #### Uso básico
 
-1. Após abrir 
+1. Após abrir, você verá esta tela:
+
+    ![](https://github.com/pauloigormoraes/SanchaCppParser/blob/master/img/0.png?raw=true)
+    
+2. Você pode clicar no menu `Arquivo > Abrir` ou `Arquivo > Salvar` para abrir ou salvar, respectivamente, um arquivo `.txt` contendo um código C++. Por padrão, você pode selecionar um dos arquivos em `models/` como exemplo.
+    
+    ![](https://github.com/pauloigormoraes/SanchaCppParser/blob/master/img/1.png?raw=true)
+    
+    ![](https://github.com/pauloigormoraes/SanchaCppParser/blob/master/img/4.png?raw=true)
+    
+3. Ao abrir um arquivo, você verá o código carregado com seus lexemas destacados com _Syntax Highlighting_:
+
+    ![](https://github.com/pauloigormoraes/SanchaCppParser/blob/master/img/2.png?raw=true)
+    
+4. Caso você não tenha um arquivo, você pode digitar seu próprio código.
+  
+5. Após ter seu código pronto, você pode fazer a Análise **Léxica** ou **Sintática**, através das opções `Ferramentas > Analisar lexemas` ou `Ferramentas > Analisar sintaxe`, respectivamente.
+    
+6. Você pode mais alguns detalhes no menu `Sobre`
+
+    ![](https://github.com/pauloigormoraes/SanchaCppParser/blob/master/img/3.png?raw=true)
+  
 
 #### Equipe
 
