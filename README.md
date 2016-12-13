@@ -13,6 +13,7 @@ _Dedicamos o nome e ícone deste projeto a nossa ex professora e orientadora [Pr
 
 1. [Instalação e execução](https://github.com/pauloigormoraes/SanchaCppParser#instalação-e-execução)
 2. [Uso básico](https://github.com/pauloigormoraes/SanchaCppParser#instalação-e-execução)
+3. [Gramática BNF C++ projetada](#)
 
 #### Instalação e execução
 
@@ -53,6 +54,23 @@ _Dedicamos o nome e ícone deste projeto a nossa ex professora e orientadora [Pr
 
     ![](https://github.com/pauloigormoraes/SanchaCppParser/blob/master/img/3.png?raw=true)
   
+
+#### Gramática BNF C++ projetada
+
+    <INICIAL> → <ATRIBUIÇÃO> | <REPETIÇÃO> | <CONDIÇÃO> | <FUNÇÃO>
+    <ATRIBUIÇÃO> → <TIPO> <ID> "=" <ARITMETICO> ";" | <TIPO> <ID> ";" | <ID> "=" <ARITMETICO> ";" | <ID> "++" ";" | <ID> "--" ";"
+    <ID> → ([a-z, A-Z])* ([0-9_])+
+    <NUMERO> → ([0-9])+
+    <TIPO> → "int" | "float" | "char" | "void"
+    <ARITMETICO> → <EXPRESSÃO> ("+" | "-" | "/" | "*") <EXPRESSÃO>
+    <EXPRESSÃO> → NUMERO | ( ARITMETICO )
+    <CONDIÇÃO> → "if" "(" <COMPARAÇÃO> ")" "{" <BLOCO> "}"
+    <REPETIÇÃO> → <PARA> | <FAÇAENQUANTO>
+    <PARA> → "for" "(" <ATRIBUIÇÃO> ";" <COMPARAÇÃO> ";" <ATRIBUIÇÃO> ")" "{" <BLOCO> "}"
+    <FUNÇÃO> → <TIPO> <ID> "(" ")" "{" <BLOCO> "}"
+    <FAÇAENQUANTO> → "do" "{" <BLOCO> "}" "while" "(" <CONDIÇÃO> ")"
+    <COMPARAÇÃO> → <ATCOND> ("==" | "!=" | ">" | "<" | ">=" | "<=") <ATCOND> | <ATCOND> |  <ATCOND> ("==" | "!=" | ">" | "<" | ">=" | "<=") <ATCOND> (("&&" | "||" ) <ATCOND> ("==" | "!=" | ">" | "<" | ">=" | "<=") <ATCOND>)+ 
+    <ATCOND> → <ID> | <NUMERO> | "true" | "false"   
 
 #### Equipe
 
