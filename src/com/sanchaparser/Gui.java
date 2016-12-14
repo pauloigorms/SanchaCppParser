@@ -23,6 +23,7 @@ package com.sanchaparser;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
+import java.util.concurrent.ExecutionException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
@@ -30,6 +31,8 @@ import javax.swing.JFileChooser;
 import org.fife.ui.rtextarea.*;
 import org.fife.ui.rsyntaxtextarea.*;
 
+import sintatico.*;
+import lexico.*;
 
 interface GerenciamentoArquivos{
     void actionAbrirArquivo();
@@ -45,6 +48,7 @@ class Gui extends Interface{
 
     private RSyntaxTextArea entrada;
     private Container janela;
+    private String arquivo = null;
 
     Gui(String tituloDaJanela){
         setTitle(tituloDaJanela);
@@ -61,7 +65,7 @@ class Gui extends Interface{
     }
 
     public void setTextarea(){
-        entrada = new RSyntaxTextArea("//Escreva seu programa aqui...\n\n");
+        entrada = new RSyntaxTextArea("/*\n** Escreva seu programa aqui...\n*/\n");
         entrada.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         entrada.setCodeFoldingEnabled(true);
         entrada.setTabSize(2);
@@ -119,7 +123,6 @@ class Gui extends Interface{
 
         aAbrir.addActionListener(actionEvent -> this.actionAbrirArquivo());
         aSalvar.addActionListener(actionEvent -> this.actionSalvarArquivo());
-        fLexemas.addActionListener(actionEvent -> this.actionAnaliseLexica());
         fAnalisar.addActionListener(actionEvent -> this.actionAnaliseSintatica());
         sGithub.addActionListener(actionEvent -> this.actionGithub());
         sSobre.addActionListener(actionEvent -> this.actionSobre());
@@ -133,7 +136,9 @@ class Gui extends Interface{
         fileChooser.setFileFilter(filter);
         if (fileChooser.showOpenDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
+            this.arquivo = file.toString();
             this.entrada.setText("");
+            updateTitle(file.toString());
             try {
                 BufferedReader in = new BufferedReader(new FileReader(file));
                 try {
@@ -157,7 +162,7 @@ class Gui extends Interface{
         fileChooser.setFileFilter(filter);
         if (fileChooser.showSaveDialog(getContentPane()) == JFileChooser.APPROVE_OPTION) {
             File file = fileChooser.getSelectedFile();
-
+            this.arquivo = file.toString() + ".txt";
             try(FileWriter fw = new FileWriter(file + ".txt")) {
                 fw.write(getEntrada());
                 fw.close();
@@ -174,12 +179,40 @@ class Gui extends Interface{
         setTitle("SanchaCppParser IDE - " + file + ".txt");
     }
 
+    private void saveFile(){
+        try(FileWriter fw = new FileWriter(arquivo)) {
+            fw.write(getEntrada());
+            fw.close();
+            updateTitle(arquivo);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void actionAnaliseLexica(){
-        setSaida("Compilado com sucesso  \n");
+        if(this.arquivo == null){
+            JOptionPane.showMessageDialog(this, "Você deve sempre salvar o arquivo antes realizar análises!");
+        }else{
+            try {
+                saveFile();
+                setSaida(AnalisadorLexico.LexicoStart(this.arquivo));
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(this, "Erro: " + e);
+            }
+        }
     }
 
     private void actionAnaliseSintatica(){
-        setSaida("Compilado com sucesso  \n");
+        if(this.arquivo == null){
+            JOptionPane.showMessageDialog(this, "Você deve sempre salvar o arquivo antes realizar análises!");
+        }else{
+            try {
+                saveFile();
+                setSaida(AnalisadorSintatico.SintaticoStart(this.arquivo));
+            }catch (Exception e){
+                JOptionPane.showMessageDialog(this, "Erro: " + e);
+            }
+        }
     }
 
     private void actionGithub(){
