@@ -1,5 +1,5 @@
 ![SanchaCppParser](https://github.com/pauloigormoraes/SanchaCppParser/blob/master/img/icon.png?raw=true)
-## Bem Vindo ao AutomataTranslator
+## Bem Vindo ao SanchaCppParser
 Implementação de um analisador **Léxico** e **Sintático** para C++ desenvolvido em *Java*, com **JavaCC** e **Swing UI**, 
 por alunos da universidade UniNorte Laureate Universities com finalidade de compor a nota 
 parcial da 3ª ARE, como projeto final, da disciplina de _Computação Teórica/Compiladores_, ministrada pelo _Prof.º M.Sc. Camilo Souza_.
