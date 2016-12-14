@@ -13,7 +13,7 @@ _Dedicamos o nome e ícone deste projeto a nossa ex professora e orientadora [Pr
 
 1. [Instalação e execução](https://github.com/pauloigormoraes/SanchaCppParser#instalação-e-execução)
 2. [Uso básico](https://github.com/pauloigormoraes/SanchaCppParser#instalação-e-execução)
-3. [Gramática BNF C++ projetada](#)
+3. [Gramática BNF C++ projetada](https://github.com/allexlima/SanchaCppParser#gramática-bnf-c-projetada)
 
 #### Instalação e execução
 
