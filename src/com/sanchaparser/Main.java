@@ -23,7 +23,6 @@ package com.sanchaparser;
 import java.awt.*;
 import java.io.*;
 import java.net.URL;
-import java.util.concurrent.ExecutionException;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.JFileChooser;
@@ -44,13 +43,13 @@ abstract class Interface extends JFrame implements GerenciamentoArquivos{
     abstract void setMenuToolBar();
 }
 
-class Gui extends Interface{
+class Main extends Interface{
 
     private RSyntaxTextArea entrada;
     private Container janela;
     private String arquivo = null;
 
-    Gui(String tituloDaJanela){
+    Main(String tituloDaJanela){
         setTitle(tituloDaJanela);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         janela = getContentPane();
@@ -123,6 +122,7 @@ class Gui extends Interface{
 
         aAbrir.addActionListener(actionEvent -> this.actionAbrirArquivo());
         aSalvar.addActionListener(actionEvent -> this.actionSalvarArquivo());
+        fLexemas.addActionListener(actionEvent -> this.actionAnaliseLexica());
         fAnalisar.addActionListener(actionEvent -> this.actionAnaliseSintatica());
         sGithub.addActionListener(actionEvent -> this.actionGithub());
         sSobre.addActionListener(actionEvent -> this.actionSobre());
@@ -255,7 +255,7 @@ class Gui extends Interface{
     }
 
     public static void main(String args[]){
-        new Gui("SanchaCppParser IDE");
+        new Main("SanchaCppParser IDE");
     }
 
 }
