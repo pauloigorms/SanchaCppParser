@@ -57,20 +57,22 @@ _Dedicamos o nome e ícone deste projeto a nossa ex professora e orientadora [Pr
 
 #### Gramática BNF C++ projetada
 
-    <INICIAL> → <ATRIBUIÇÃO> | <REPETIÇÃO> | <CONDIÇÃO> | <FUNÇÃO>
-    <ATRIBUIÇÃO> → <TIPO> <ID> "=" <ARITMETICO> ";" | <TIPO> <ID> ";" | <ID> "=" <ARITMETICO> ";" | <ID> "++" ";" | <ID> "--" ";"
-    <ID> → ([a-z, A-Z])* ([0-9_])+
+    <INICIAL> → <ATRIBUIÇÃO> | <REPETIÇÃO> | <CONDIÇÃO>
+    <ATRIBUIÇÃO> → <TIPO> <IDENTIFICADOR> "=" <ARITMETICO> ";" | <TIPO> <IDENTIFICADOR> ";" | <IDENTIFICADOR> "=" <ARITMETICO> ";" | <IDENTIFICADOR> "++" ";" | <IDENTIFICADOR> "--" ";" | <ATRIBUIRFUNÇÃO>
+    <IDENTIFICADOR> → ([a-z, A-Z])* ([0-9_])+
     <NUMERO> → ([0-9])+
+    <NUMEROREAL> → ([0-9])+ | ([0-9])* . ([0-9])*
     <TIPO> → "int" | "float" | "char" | "void"
     <ARITMETICO> → <EXPRESSÃO> ("+" | "-" | "/" | "*") <EXPRESSÃO>
-    <EXPRESSÃO> → NUMERO | ( ARITMETICO )
+    <EXPRESSÃO> → <NUMEROINTEIRO> | <NUMEROREAL>
     <CONDIÇÃO> → "if" "(" <COMPARAÇÃO> ")" "{" <BLOCO> "}"
     <REPETIÇÃO> → <PARA> | <FAÇAENQUANTO>
     <PARA> → "for" "(" <ATRIBUIÇÃO> ";" <COMPARAÇÃO> ";" <ATRIBUIÇÃO> ")" "{" <BLOCO> "}"
-    <FUNÇÃO> → <TIPO> <ID> "(" ")" "{" <BLOCO> "}"
+    <FUNÇÃO> → <TIPO> <IDENTIFICADOR> "(" ")" "{" <BLOCO> "}"
     <FAÇAENQUANTO> → "do" "{" <BLOCO> "}" "while" "(" <CONDIÇÃO> ")"
+    <ATRIBUIRFUNÇÃO> → <IDENTIFICADOR> ( "<<" | ">>" ) "\"" <IDENTIFICADOR> "\"" ";" 
     <COMPARAÇÃO> → <ATCOND> ("==" | "!=" | ">" | "<" | ">=" | "<=") <ATCOND> | <ATCOND> |  <ATCOND> ("==" | "!=" | ">" | "<" | ">=" | "<=") <ATCOND> (("&&" | "||" ) <ATCOND> ("==" | "!=" | ">" | "<" | ">=" | "<=") <ATCOND>)+ 
-    <ATCOND> → <ID> | <NUMERO> | "true" | "false"   
+    <ATCOND> → <IDENTIFICADOR> | <NUMERO> | "true" | "false"   
 
 #### Equipe
 
